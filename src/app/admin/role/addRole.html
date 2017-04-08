@@ -1,0 +1,43 @@
+<template-panel-form>
+    <form #f="ngForm" class="form-horizontal" (ngSubmit)="onSubmit()" plane-body>
+        <div class="form-group">
+            <label for="roleName" class="col-md-2 control-label" >
+                    角色名称
+                </label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="role.roleName" id="roleName" [(ngModel)]="role.roleName" placeholder="roleName"
+                    #roleName="ngModel">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name" class="col-md-2 control-label" >
+                    角色标识
+                </label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="role.name" id="name" [disabled]="name_valid" [(ngModel)]="role.name" placeholder="name"
+                    #name="ngModel">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="desc" class="col-md-2 control-label" >
+                    说明
+                </label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="role.desc" id="desc" [(ngModel)]="role.desc" placeholder="desc" #desc="ngModel">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="">
+                    <label>
+                           <input type="checkbox" name="isValid"
+                                 [(ngModel)]="role.isValid" #isValid="ngModel"> 是否启用
+                        </label>
+                </div>
+
+            </div>
+        </div>
+        <common-formFooter [submitValue]="submitValue" (onBack)="onBack()">
+        </common-formFooter>
+    </form>
+</template-panel-form>

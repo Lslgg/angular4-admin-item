@@ -1,0 +1,68 @@
+<template-panel-form>
+    <div plane-body>
+        <form #f="ngForm" class="form-horizontal" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="username" class="col-md-2 control-label" >
+                    用户名
+                </label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" [(ngModel)]="user.username" name="username" required minlength="4" maxlength="24"
+                        id="username" placeholder="用户名" #username="ngModel" [disabled]="'true'">
+                    <div *ngIf="username.errors && (username.dirty || username.touched)" class="alert alert-danger">
+                        <div [hidden]="!username.errors.required">
+                            请填写用户名
+                        </div>
+                        <div [hidden]="!username.errors.minlength">
+                            用户名必需4个字符
+                        </div>
+                        <div [hidden]="!username.errors.maxlength">
+                            用户名不能大于24个字符
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="oldpassWord" class="col-md-2 control-label">旧密码</label>
+                <div class="col-md-10">
+                    <input type="password" class="form-control" [(ngModel)]="user.oldpassWord" name="oldpassWord" required minlength="1" maxlength="24"
+                        id="oldpassWord" placeholder="请输入您现在的密码" #oldpassWord="ngModel">
+                    <div *ngIf="oldpassWord.errors && (oldpassWord.dirty || oldpassWord.touched)" class="alert alert-danger">
+                        <div [hidden]="!oldpassWord.errors.required">
+                            请填写密码
+                        </div>
+                        <div [hidden]="!oldpassWord.errors.minlength">
+                            密码必需6个字符
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="passWord" class="col-md-2 control-label">密码</label>
+                <div class="col-md-10">
+                    <input type="passWord" class="form-control" [(ngModel)]="user.passWord" name="passWord" required minlength="6" maxlength="24"
+                        validateEqual="confirmpassword" reverse="true" id="passWord" placeholder="密码" #passWord="ngModel">
+                    <div *ngIf="passWord.errors && (passWord.dirty || passWord.touched)" class="alert alert-danger">
+                        <div [hidden]="!passWord.errors.required">
+                            请填写密码
+                        </div>
+                        <div [hidden]="!passWord.errors.minlength">
+                            密码必需6个字符
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="confirmpassword" class="col-md-2 control-label">确认密码</label>
+                <div class="col-md-10">
+                    <input type="passWord" class="form-control" [(ngModel)]='user.confirmpassword' name="confirmpassword" validateEqual="passWord"
+                        reverse="false" id="confirmpassword" placeholder="确认密码" #confirmpassword="ngModel">
+                    <div [hidden]="confirmpassword.valid || (confirmpassword.pristine && !f.submitted)" class="alert alert-danger">
+                        两次输入的密码不相同！
+                    </div>
+                </div>
+            </div>
+            <common-formFooter [submitValue]="submitValue" (onBack)="onBack()">
+            </common-formFooter>
+        </form>
+    </div>
+</template-panel-form>

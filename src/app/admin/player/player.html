@@ -1,0 +1,9 @@
+<template-panel-table>
+    <common-tableOperation [addurl]="Addurl" [isAddHidden]="'hidden'" 
+        [isDelHidden]="'hidden'" (onSearch)="onSearch($event)"
+        plane-title>
+    </common-tableOperation>
+    <common-table [tableInfo]="tableInfo" [listData]="listDataArrray" [pageSize]="pageSize" [pageCount]="pageCount" (ongetPageList)="ongetPageList($event)"
+        (onUpInfo)="onUpInfoUser($event)" (onAllchecked)="onAllchecked($event)" plane-body>
+    </common-table>
+</template-panel-table>

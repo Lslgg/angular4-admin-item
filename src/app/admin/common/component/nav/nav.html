@@ -1,0 +1,58 @@
+<div class="navbar navbar-default main-nav">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" routerLink="../admin/index">
+        <i class="fa fa-home" aria-hidden="true"></i> 闲娱麻将
+      </a>
+    </div>
+    <div class="navbar-collapse collapse navbar-responsive-collapse">
+      <ul class="nav navbar-nav">
+        <li *ngFor="let item of MenuList">
+          <a routerLink="{{item.path}}">
+            <i class="fa {{ item.data.menu.icon }}" aria-hidden="true"></i> {{ item.data.menu.title }}
+          </a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="javascript:void(0)">
+            <i class="fa fa-smile-o" aria-hidden="true"></i> 欢迎光临！
+          </a>
+        </li>
+        <li class="dropdown">
+          <a href="javascript:void(0)" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-user" aria-hidden="true"></i> admin
+            <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="javascript:void(0)" (click)="upUserPwd()">
+                <i class="fa fa-list-alt" aria-hidden="true"></i> 修改密码
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <i class="fa fa-envelope-o" aria-hidden="true"></i> 我的消息
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" (click)="upUserInfo()">
+                <i class="fa fa-user-plus" aria-hidden="true"></i> 个人信息
+              </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <a href="javascript:void(0)" (click)="LogOut()">
+                <i class="fa fa-sign-out" aria-hidden="true"></i> 退出
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

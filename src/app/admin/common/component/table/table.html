@@ -1,0 +1,52 @@
+<table class="table table-bordered table-striped table-condensed">
+	<thead>
+		<tr>
+			<th *ngFor="let item of listTitle">
+				<ng-container [ngSwitch]="item">
+					<ng-container *ngSwitchCase="'checkbox'">
+						<input type="checkbox" name="checkAll" (click)="allchecked(checkAll.checked)" #checkAll/>
+					</ng-container>
+					<ng-container *ngSwitchDefault>{{item}}</ng-container>
+				</ng-container>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let table_data of listData let i=index">
+			<td *ngFor="let fieldName of listField">
+				<ng-container [ngSwitch]="fieldName">
+					<ng-container *ngSwitchCase="'index'">
+						{{i+1}}
+					</ng-container>
+					<ng-container *ngSwitchCase="'checkbox'">
+						<input type="checkbox" [checked]="checkstr" (change)="onCheckbox(table_data[key])" />
+					</ng-container>
+					<ng-container *ngSwitchCase="'operation'">
+						<ng-container *ngFor="let operation of listOperation">
+							<ng-container [ngSwitch]="operation">
+								<ng-container *ngSwitchCase="'添加'">
+									<a href="javascript:void(0)">添加</a>
+								</ng-container>
+								<ng-container *ngSwitchCase="'修改'">
+									<a href="javascript:void(0)" (click)="upInfo(table_data[key])">修改</a>
+								</ng-container>
+								<ng-container *ngSwitchCase="'删除'">
+									<a href="javascript:void(0)" (click)="delInfo(table_data[key])">删除</a>
+								</ng-container>
+								<ng-container *ngSwitchCase="'显示'">
+									<a href="javascript:void(0)">显示</a>
+								</ng-container>
+							</ng-container>
+						</ng-container>
+					</ng-container>
+					<ng-container *ngSwitchDefault>
+						{{table_data[fieldName]}}
+					</ng-container>
+				</ng-container>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<common-pagiation [pageSize]="pageSize" [pageCount]="pageCount" (ongetPage)="ongetPage($event)">
+</common-pagiation>

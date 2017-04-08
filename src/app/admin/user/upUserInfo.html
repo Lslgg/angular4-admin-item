@@ -1,0 +1,46 @@
+<template-panel-form>
+    <div plane-body>
+        <form #f="ngForm" class="form-horizontal" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="username" class="col-md-2 control-label" >
+                    用户名
+                </label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" [(ngModel)]="user.username" name="username" required minlength="4" maxlength="24"
+                        id="username" placeholder="用户名" #username="ngModel" [disabled]="'true'">
+                    <div *ngIf="username.errors && (username.dirty || username.touched)" class="alert alert-danger">
+                        <div [hidden]="!username.errors.required">
+                            请填写用户名
+                        </div>
+                        <div [hidden]="!username.errors.minlength">
+                            用户名必需4个字符
+                        </div>
+                        <div [hidden]="!username.errors.maxlength">
+                            用户名不能大于24个字符
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-md-2 control-label">邮箱</label>
+                <div class="col-md-10">
+                    <input type="email" class="form-control" [(ngModel)]="user.email" name="email" id="email" placeholder="邮箱" #email="ngModel">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phone" class="col-md-2 control-label">联系电话</label>
+                <div class="col-md-10">
+                    <input type="phone" class="form-control" [(ngModel)]="user.phone" name="phone" id="phone" placeholder="联系电话" #phone="ngModel">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address" class="col-md-2 control-label">联系地址</label>
+                <div class="col-md-10">
+                    <input type="address" class="form-control" [(ngModel)]="user.address" name="address" id="address" placeholder="联系电话" #address="ngModel">
+                </div>
+            </div>
+            <common-formFooter [submitValue]="submitValue" (onBack)="onBack()">
+            </common-formFooter>
+        </form>
+    </div>
+</template-panel-form>
