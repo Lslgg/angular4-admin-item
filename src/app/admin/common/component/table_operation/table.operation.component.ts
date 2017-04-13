@@ -2,25 +2,26 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'common-tableOperation',
-    styles:[`.hidden {
-          display:none !important;
-        }`
-    ],
+    styleUrls:['table.css'],
     templateUrl:'table.html'
 
 })
 
 export class TableOperationComponent implements OnInit {
 
-    @Input() addurl:string;
-
     @Output() onSearch=new EventEmitter();
 
     @Output() onDelete=new EventEmitter();
 
+    @Output() onAddInfo=new EventEmitter();
+
+    @Output() onUpdate=new EventEmitter();
+
     @Input() isAddHidden="";
 
     @Input() isDelHidden="";
+
+    @Input() addurl="";
     
     constructor() { }
 
@@ -34,5 +35,13 @@ export class TableOperationComponent implements OnInit {
 
     delete(){
         this.onDelete.emit();
+    }
+
+    addInfo(){
+        this.onAddInfo.emit();
+    }
+
+    upInfo(){
+        this.onUpdate.emit();
     }
 }

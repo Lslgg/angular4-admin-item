@@ -94,4 +94,8 @@ export class UserComponent implements OnInit {
     onDelete() {
         console.log('onDelete');
     }
+
+     onAddInfo() {
+        this.router.navigate(['/admin/addUser']);
+    }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router }   from '@angular/router';
+import { Router } from '@angular/router';
 
 import { Table, Row, OperationType } from '../common/component/table/index'
 import { RoleService } from './shared/role.service';
@@ -23,7 +23,7 @@ export class RoleComponent implements OnInit {
 
     pageCount: Promise<number>;
 
-    constructor(private router:Router,
+    constructor(private router: Router,
         private roleService: RoleService) {
 
         let rowtitle: Array<[string, string]> = [
@@ -33,7 +33,7 @@ export class RoleComponent implements OnInit {
             ["标识", "name"],
             ["操作", "operation"]
         ];
-        
+
         let operation: Array<OperationType> = [
             OperationType.DELETE,
             OperationType.UPDATE
@@ -54,8 +54,8 @@ export class RoleComponent implements OnInit {
     }
 
     ongetPageList(index) {
-       this.roleService.getList(index, this.pageSize)
-                .then((roles) => { this.listDataArrray = roles; });
+        this.roleService.getList(index, this.pageSize)
+            .then((roles) => { this.listDataArrray = roles; });
     }
 
     ondelInfo(id: string) {
@@ -72,21 +72,25 @@ export class RoleComponent implements OnInit {
     }
 
     onUpInfo(id: string) {
-         this.router.navigate(['../admin/addRole',id]);
+        this.router.navigate(['../admin/addRole', id]);
     }
 
     //全选
-    onAllchecked(checkbox:boolean){
-        
+    onAllchecked(checkbox: boolean) {
+
     }
 
     //查找
-    onSearch(){
+    onSearch() {
         console.log("onSearch");
     }
 
     //选择删除
-    onDelete(){
+    onDelete() {
         console.log('onDelete');
+    }
+
+    onAddInfo() {
+        this.router.navigate(['/admin/addRole']);
     }
 }

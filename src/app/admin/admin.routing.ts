@@ -11,6 +11,8 @@ import { CardLogComponent } from './cardLog';
 import { PlayerComponent, AddPlayerComponent } from './player';
 import { SystemComponent } from './system';
 import { SystemLogComponent } from './systemLog';
+import { MenuComponent } from './menu';
+
 
 
 const routes: Routes = [
@@ -28,14 +30,14 @@ const routes: Routes = [
   { path: 'card', component: CardComponent ,data: { title: '房卡管理' } },
   { path: 'addCard', component: AddCardComponent,data: { title: '添加房卡' }  },
   { path: 'addCard/:id', component: AddCardComponent,data: { title: '修改房卡' }  },
-  { path: 'cardLog', component: CardLogComponent,data: { title: '首页' }  },
+  { path: 'cardLog', component: CardLogComponent,data: { title: '房卡日志' }  },
   { path: 'player', component: PlayerComponent,data: { title: '玩家管理' }  },
-  { path: 'addPlayer', component: AddPlayerComponent,data: { title: 'player' }  },
-  { path: 'addPlayer/:id', component: AddPlayerComponent,data: { title: '首页' }  },
+  { path: 'addPlayer', component: AddPlayerComponent,data: { title: '添加房卡' }  },
+  { path: 'addPlayer/:id', component: AddPlayerComponent,data: { title: '候改房卡' }  },
   { path: 'system', component: SystemComponent,data: { title: '游戏设置' }  },
   { path: 'systemLog', component: SystemLogComponent,data: { title: '系统日志' }  },
+  { path: 'menu', component: MenuComponent,data: { title: '菜单管理' }  },
   { path: '**', component: IndexComponent,data: { title: '404' }  },
-
 ];
 
 
@@ -62,5 +64,6 @@ export const ComponentList = [
   PlayerComponent,
   AddPlayerComponent,
   SystemComponent,
-  SystemLogComponent
+  SystemLogComponent,
+  MenuComponent
 ]

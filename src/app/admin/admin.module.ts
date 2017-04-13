@@ -4,12 +4,10 @@ import { HttpModule, Jsonp, URLSearchParams } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { DropdownModule } from 'ng2-bootstrap/dropdown';
 import { TabsModule } from 'ng2-bootstrap/tabs';
+import { MenuModule } from './menu/menu.module';
 
 import { CommonModule as SystemCommonModule } from '@angular/common';
-import { HeaderComponent } from './layouts/header.component';
-import { FooterComponent } from './layouts/footer.component';
-import { SidebarComponent } from './layouts/sidebar.component';
-import { AsideComponent } from './layouts/aside.component';
+import { HeaderComponent, FooterComponent, SidebarComponent, AsideComponent } from './layouts';
 
 import { BreadcrumbsComponent } from './common/component/crumbs'
 
@@ -22,6 +20,8 @@ import {
   NAV_DROPDOWN_DIRECTIVES,
   AsideToggleDirective
 } from './common/directive';
+
+
 
 import { CommonModule as MyCommonModule } from './common/common.module';
 import { TemplateModule } from './template/template.module'
@@ -37,7 +37,8 @@ import { CardLogService } from './cardLog/shared/cardLog.service';
     TemplateModule,
     DropdownModule.forRoot(),
     TabsModule.forRoot(),
-    AdminRoutingModule
+    AdminRoutingModule,
+    MenuModule
   ],
   declarations: [
     AdminComponent,
