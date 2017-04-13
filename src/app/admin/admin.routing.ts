@@ -11,7 +11,7 @@ import { CardLogComponent } from './cardLog';
 import { PlayerComponent, AddPlayerComponent } from './player';
 import { SystemComponent } from './system';
 import { SystemLogComponent } from './systemLog';
-import { MenuComponent } from './menu';
+import { MenuComponent, AddMenuComponent } from './menu';
 
 
 
@@ -37,6 +37,8 @@ const routes: Routes = [
   { path: 'system', component: SystemComponent,data: { title: '游戏设置' }  },
   { path: 'systemLog', component: SystemLogComponent,data: { title: '系统日志' }  },
   { path: 'menu', component: MenuComponent,data: { title: '菜单管理' }  },
+  { path: 'addMenu', component: AddMenuComponent,data: { title: '添加菜单' }  },
+  { path: 'addMenu/:id', component: AddMenuComponent,data: { title: '修改菜单' }  },  
   { path: '**', component: IndexComponent,data: { title: '404' }  },
 ];
 
@@ -65,5 +67,6 @@ export const ComponentList = [
   AddPlayerComponent,
   SystemComponent,
   SystemLogComponent,
-  MenuComponent
+  MenuComponent,
+  AddMenuComponent
 ]

@@ -1,6 +1,26 @@
+   
+li{ 
+    list-style: none; 
+    border-left:dotted 1px gray; 
+}
 
-ul{ padding:6px 3px; }
+ul{
+    padding-left: 0px;
+}
 
-li{ list-style: none; }
+.ul_li{
+    padding-left:20px;padding-top:3px;padding-bottom:3px;
+}
 
+p{
+    padding: 3px 6px;
+    margin: 0px;
+}
 
+.hiden{
+    display: none;
+}
+
+.mouse{
+    cursor:pointer;
+}

@@ -7,27 +7,39 @@ export class MenuDirective {
     }
 
     @HostListener('click') onclick() {
-        this.toggle();
+        let className=this.el.nativeElement.className;
+        let id=this.el.nativeElement.id;
+        let isopen="fa fa-folder-open"==className;
+        this.toggle(isopen,id);
     }
 
-    private toggle() {
-        this.el.nativeElement.classList.toggle("icon-doc");
-        let x = document.body.querySelectorAll('.tr_0');
+    private toggle(isopen:boolean,id:string) {
+        let nowEl=this.el.nativeElement.classList;
+        if(isopen){
+            nowEl.remove("fa-folder-open");
+            nowEl.add("fa-folder"); 
+        }else{
+            nowEl.add("fa-folder-open");
+            nowEl.remove("fa-folder"); 
+        }
+
+        let menuList = document.body.querySelectorAll('.menu_'+id);
+        
         let index = 0;
-        for (index = 0; index < x.length; index++) {
-            x[index].classList.toggle("hiden");
+        for (index; index < menuList.length; index++) {
+            menuList[index].classList.toggle("hiden");
         }
     }
 }
 
-@Directive({ selector: '[menuTrhover]' })
+@Directive({ selector: '[menuhover]' })
 export class MenuTrhover{
     constructor(private el: ElementRef) {
 
     }
 
     @HostListener('mouseenter') onMouseEnter() {
-        this.TrbgColor("red");        
+        this.TrbgColor("#efeffe");        
     }
 
     @HostListener('mouseleave') onMouseLeave() {
