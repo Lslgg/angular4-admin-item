@@ -1,7 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
 import { User, CardLog } from '../../common/module/index';
-import { Observable } from 'rxjs/Observable';
-import { Subscriber } from 'rxjs/Subscriber';
 import { CardLogService } from '../../cardLog/shared/cardLog.service';
 
 @Injectable()
@@ -9,7 +7,7 @@ export class UserService {
 
     Parse: any;
 
-    constructor( @Inject("parse") parse,
+    constructor(@Inject("parse") parse,
         private cardLogService: CardLogService) {
         this.Parse = parse.Parse;
     }

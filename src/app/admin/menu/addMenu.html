@@ -14,7 +14,7 @@
                     菜单名
                 </label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="name">
+                    <input type="text" class="form-control" [(ngModel)]="menu.title" name="title" id="title">
                 </div>
             </div>
             <div class="form-group">
@@ -22,7 +22,7 @@
                     编号
                 </label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="code">
+                    <input type="text" class="form-control" [(ngModel)]="menu.code" name="code" id="code">
                 </div>
             </div>
             <div class="form-group">
@@ -30,14 +30,14 @@
                     Url
                 </label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="url">
+                    <input type="text" class="form-control" [(ngModel)]="menu.url" name="url"  id="url">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <div class="">
                         <label>
-                           <input type="checkbox" name="isValid"> 是否启用
+                           <input type="checkbox" [(ngModel)]="menu.isValid" name="isValid" id="isValid"> 是否启用
                         </label>
                     </div>
                 </div>

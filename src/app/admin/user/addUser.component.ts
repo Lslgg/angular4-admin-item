@@ -1,4 +1,4 @@
-import { Component, OnInit,trigger, state, style, animate, transition } from '@angular/core';
+import { Component, OnInit,trigger } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { User } from '../common/module/index';
 import { FormGroup } from '@angular/forms';
@@ -17,6 +17,7 @@ export class AddUserComponent implements OnInit {
     submitValue: string="添加";
     
     isShowPwd:boolean=false;
+    
     user: User;
 
     roleList: Array<{ name: string, roleName: string }>;
@@ -58,12 +59,6 @@ export class AddUserComponent implements OnInit {
     
     onSubmit() {
         let currentUser=this.userService.getCurrentUser();
-        /***
-        if(currentUser.username=="admin"){
-            alert("不能修改admin用户信息");
-            return;
-        }
-        */
         let user = this.userService.addUser(this.user);
         user.then((value) => {
             alert(this.user.id != undefined ? "修改用户成功！" : "添加用户成功！");

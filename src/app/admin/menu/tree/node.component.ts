@@ -46,8 +46,9 @@ export class NodeComponent implements OnInit {
     }
 
     getSubMenu(id: string) {
-        this.Menulist = Menu.MenuList().filter(m => m.pid == id);
-        this.IsSubMenu=this.Menulist.length!=0;
+        // this.Menulist = Menu.MenuList().filter(m => m.pid == id);
+        // this.IsSubMenu=this.Menulist.length!=0;
+        // console.log(this.Menulist);
     }
 
     addMenu(id:string){

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Menu } from '../shared/menu';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'admin-tree',
@@ -10,9 +11,9 @@ import { Menu } from '../shared/menu';
                 <p menuhover>
                     <i class="fa fa-folder-open" id="0" menuroot></i> 根目录
                     <span>
-                        <i class="fa fa-plus"></i>
-                        <i class="fa fa-edit"></i>
-                        <i class="fa fa-minus"></i>
+                       <i class="fa fa-plus mouse" title="添加" (click)="addMenu(0)"></i>
+                       <i class="fa fa-edit mouse" title="修改" (click)="addMenu(0)"></i>
+                       <i class="fa fa-minus mouse" title="删除" (click)="addMenu(0)"></i>
                     </span>
                 </p>
             </li>
@@ -27,9 +28,13 @@ export class TreeComponent implements OnInit {
     FirstMenulist: Array<Menu>;
 
 
-    constructor() {
-        this.FirstMenulist = Menu.MenuList().filter(m => m.pid == "0");
+    constructor(private router:Router) {
+       // this.FirstMenulist = Menu.MenuList().filter(m => m.pid == "0");
     }
 
     ngOnInit() { }
+
+    addMenu(id:string){
+        this.router.navigate(['/admin/addMenu']);
+    }
 }
