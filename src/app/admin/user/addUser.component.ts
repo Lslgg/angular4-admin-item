@@ -70,5 +70,5 @@ export class AddUserComponent implements OnInit {
 
     onBack() {
         this.router.navigate(['admin/user']);
-    }
+    }    
 }

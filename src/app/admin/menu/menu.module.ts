@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MenuComponent } from './menu.component';
 import { TreeComponent,NodeComponent } from './tree';
 import { MenuDirective, MenuTrhover } from './directive/menu.directive';
+import { MenuService } from './shared/menu.service';
 
 @NgModule({
     imports: [
@@ -23,6 +24,6 @@ import { MenuDirective, MenuTrhover } from './directive/menu.directive';
         MenuDirective,
         MenuTrhover,
     ],
-    providers: [],
+    providers: [ MenuService ],
 })
 export class MenuModule { }

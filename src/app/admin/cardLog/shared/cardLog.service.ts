@@ -5,7 +5,8 @@ import { CardLog } from '../../common/module'
 export class CardLogService {
 
     Parse: any;
-    constructor( @Inject("parse") parse) {
+
+    constructor(@Inject("parse") parse) {
         this.Parse = parse.Parse;
     }
 

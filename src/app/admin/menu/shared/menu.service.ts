@@ -5,48 +5,49 @@ import { Parse } from '../../../common/parse';
 @Injectable()
 export class MenuService {
 
-    Parse: any;
+    Parse: ParserServer;
 
-    ParserService: any;
+    tableName: string = "Menu"
 
-    constructor( @Inject("parse") parse: Parse) {
-        this.Parse = parse.Parse;
-        this.ParserService = parse;
+    constructor(@Inject("parse") parse: ParserServer) {
+        this.Parse = parse;
     }
 
-    add(menu: Menu): Promise<string> {
-        var DbMenu = this.Parse.Object.extend("Menu");
+    public add(menu: Menu): Promise<boolean> {
+        var DbMenu = this.Parse.Parse.Object.extend(this.tableName);
         let dbMenu = new DbMenu();
         var menuInfo = this.setInfo(menu, dbMenu);
-        let promise = this.ParserService.add(menuInfo);
+        let promise = this.Parse.add(menuInfo);
         return promise;
     }
 
-    update(menu: Menu): Promise<boolean> {
-        let dbMenu = this.ParserService.find(menu.id);
-        let promise = new Promise((re, rj) => {
-            dbMenu.then(info => {
-                this.setInfo(menu, info);
-                this.ParserService.update(info).then(v => re(v)).catch(error => rj(false))
-            });
-        });
-
+    public delete(id:string):Promise<boolean>{
+        let promise=this.Parse.delete(id,this.tableName);
         return promise;
     }
 
-    find(id:string):Promise<Menu>{
-        let promise=this.ParserService.find(id,"Menu");
+    public getInfo(id: string): Promise<Menu> {
+        let promise = this.Parse.getInfo<Menu>(id, "Menu");
+        return promise;
+    }
+
+    public findbyPid(pid: string):Promise<Array<Menu>> {
+        let table = this.Parse.Parse.Object.extend(this.tableName);
+        let query = new this.Parse.Parse.Query(table);
+        query.equalTo("pid",pid);
+        let promise=this.Parse.findWhere<Menu>(query);
         return promise;
     }
 
     private setInfo(menu: Menu, dbInfo: any) {
-        console.log(menu);
         dbInfo.set("id", menu.id);
         dbInfo.set("title", menu.title);
         dbInfo.set("code", menu.code);
         dbInfo.set("url", menu.url);
         dbInfo.set("pid", menu.pid);
-        dbInfo.set("isValid",menu.isValid);
+        dbInfo.set("isValid", menu.isValid);
         return dbInfo;
     }
+
+
 }

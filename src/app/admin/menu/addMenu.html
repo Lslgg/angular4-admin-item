@@ -6,7 +6,7 @@
                     父级菜单
                 </label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="parentMenu" [disabled]="'true'">
+                    <input type="text" class="form-control" [(ngModel)]="menu.parentTitle" name="parentTitle" id="parentTitle" [disabled]="'true'">
                 </div>
             </div>
             <div class="form-group">
