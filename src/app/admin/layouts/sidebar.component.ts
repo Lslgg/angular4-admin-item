@@ -18,8 +18,8 @@ export class SidebarComponent implements OnInit {
         this.layoutsService.findAllMenu().then(list => {
             this.navMenuList = list;
             let navList = new Array<NavMenu>();
-            navList=this.getTreeList("0", navList);
-            console.log(navList)
+            this.navMenuList=this.getTreeList("0", navList);
+            console.log(this.navMenuList);
         });
     }
 

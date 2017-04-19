@@ -1,38 +1,30 @@
 <template-panel-table>
-    <div class="div-title" plane-title>
-        <a href="javascript:;" class="btn btn-raised btn-default">
-            <i class="fa fa-plus-square-o" aria-hidden="true"></i> 返回
-        </a>
-        <a href="javascript:;" (click)="onSave()" class="btn btn-raised btn-warning">
-            <i class="fa fa-plus-square-o" aria-hidden="true"></i> 保存
-        </a>
-    </div>
-    <div class="row" plane-body>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">角色 ( {{currentRole}} )</div>
-                <div class="panel-body">
-                    <div class="btn-group-vertical">
-                        <ng-container *ngFor="let item of roleList">
+    <div plane-body>
+        <div class="row">
+            <div class="col-md-3">
+                <ul>
+                    <ng-container *ngFor="let item of roleList">
+                        <li>
                             <a href="javascript:void(0)" (click)="onRoleClick(item.id,item.roleName)" class="btn btn-raised">{{ item.roleName }}</a>
-                        </ng-container>
+                        </li>
+                    </ng-container>
+                </ul>
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    <div class="input-group">
+                        <button class="btn btn-primary" type="button" (click)="addInfo()"><i class="fa fa-plus"></i> 添加</button>
+                        <button class="btn btn-info" type="button" data-toggle="modal" (click)="largeModal.show()"><i class="fa fa-edit"></i>选择菜单</button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">模块 (
-                    <input type="checkbox" name="allcheck" (change)="onAllcheck(allCheck.checked)" #allCheck> 全选 ) </div>
-                <div class="panel-body">
-                    <ol>
-                        <ng-container *ngFor="let item of menuList">
-                            <li>
-                                <input type="checkbox" [checked]="item.isChecked" (change)="oncheck(item.id,checkstr.checked)" name="checkstr" #checkstr>                                {{ item.title }}
-                            </li>
-                        </ng-container>
-                    </ol>
-                </div>
+                <table class="table table-bordered table-striped table-condensed">
+                    <thead>
+                        <th>名称</th>
+                        <th>url</th>
+                        <th>状态</th>
+                        <th>说明</th>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>

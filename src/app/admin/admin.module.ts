@@ -4,6 +4,7 @@ import { HttpModule, Jsonp, URLSearchParams } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { DropdownModule } from 'ng2-bootstrap/dropdown';
 import { TabsModule } from 'ng2-bootstrap/tabs';
+
 import { MenuModule } from './menu/menu.module';
 
 import { CommonModule as SystemCommonModule } from '@angular/common';

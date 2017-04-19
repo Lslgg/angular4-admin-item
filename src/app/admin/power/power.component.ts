@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminMenu } from '../common';
 import { RoleService } from '../role/shared/role.service';
 import { PowerService } from './shared/power.service';
+import { ModalDirective } from 'ng2-bootstrap/modal/modal.component';
 
 @Component({
 	selector: 'admin-power',
