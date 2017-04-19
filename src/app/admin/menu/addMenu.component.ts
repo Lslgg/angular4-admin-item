@@ -26,7 +26,12 @@ export class AddMenuComponent implements OnInit {
             this.submitValue = "添加";
             this.menu.parentTitle = "根目录";
             this.menu.pid = "0";
+            this.menu.isLeaf = true;
             this.menu.isValid = true;
+            this.menu.id = "";
+            this.menu.code = "";
+            this.menu.title = "";
+            this.menu.url = "";
         } else {
             this.menuService.getInfo(id).then(val => {
                 this.menu = val
@@ -35,6 +40,7 @@ export class AddMenuComponent implements OnInit {
                     this.menu.parentTitle = this.menu.title;
                     this.menu.pid = this.menu.id;
                     this.menu.isValid = true;
+                    this.menu.isLeaf = true;
                     this.menu.id = "";
                     this.menu.code = "";
                     this.menu.title = "";
@@ -44,8 +50,8 @@ export class AddMenuComponent implements OnInit {
                         this.menuService.getInfo(val.pid).then(val => {
                             this.menu.parentTitle = val.title;
                         })
-                    }else{
-                        this.menu.parentTitle="根目录";
+                    } else {
+                        this.menu.parentTitle = "根目录";
                     }
 
                 }
@@ -58,9 +64,19 @@ export class AddMenuComponent implements OnInit {
     onSubmit() {
         //添加修改
         this.menuService.add(this.menu).then(val => {
-            if(val){
-                alert("操作成功！");
-                //this.router.navigate(['admin/menu']);
+            if (val) {
+                if (this.menu.pid == "0") {
+                    alert("操作成功！");
+                    this.router.navigate(['admin/menu']);
+                    return ;
+                }
+                this.menuService.getInfo(this.menu.pid).then(val => {
+                    val.isLeaf = false;
+                    this.menuService.add(val).then(v => {
+                        alert("操作成功！");
+                        this.router.navigate(['admin/menu']);
+                    });
+                })
             }
         })
     }

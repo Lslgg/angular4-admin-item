@@ -14,7 +14,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <button class="btn btn-primary" type="button" (click)="addInfo()"><i class="fa fa-plus"></i> 添加</button>
-                        <button class="btn btn-info" type="button" data-toggle="modal" (click)="largeModal.show()"><i class="fa fa-edit"></i>选择菜单</button>
+                        <button class="btn btn-info" type="button" data-toggle="modal" (click)="lgModal.show()"><i class="fa fa-edit"></i>选择菜单</button>
                     </div>
                 </div>
                 <table class="table table-bordered table-striped table-condensed">
@@ -25,6 +25,49 @@
                         <th>说明</th>
                     </thead>
                 </table>
+            </div>
+        </div>
+        <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title pull-left">菜单列表</h4>
+                        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <th>
+                                    <input type="checkbox" name="checkAll"  (click)="allchecked(checkAll.checked)" #checkAll>
+                                </th>
+                                <th>名称</th>
+                                <th>url</th>
+                                <th>状态</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let menu of NaveMenulist">
+                                    <td> <input type="checkbox" [checked]="menu.isChecked" name="allcheck" id="allcheck"></td>
+                                    <td>{{menu.title}}</td>
+                                    <td>{{menu.url}}</td>
+                                    <td>
+                                        <ng-container *ngIf="menu.isValid">
+                                            <span class="badge badge-success">有效</span>
+                                        </ng-container>
+                                        <ng-container *ngIf="!menu.isValid">
+                                            <span class="badge badge-default">无效</span>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" (click)="lgModal.hide()" aria-label="Close">关闭</button>
+                        <button class="btn btn-primary" type="button" (click)="onSave();lgModal.hide()" aria-label="Close">保存</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

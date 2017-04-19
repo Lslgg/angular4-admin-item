@@ -1,60 +1,50 @@
 import { Injectable, Inject } from '@angular/core';
+import { NavMenu, Power } from './power';
 
 @Injectable()
 export class PowerService {
-    Parse: any;
 
-    constructor( @Inject("parse") parse) {
-        this.Parse = parse.Parse;
+    Parse: ParserServer;
+
+    tableName: string = "power"
+
+    constructor( @Inject("parse") parse: ParserServer) {
+        this.Parse = parse;
     }
-    
+
     //查找权限表
     getInfo(roleId: string): Promise<any> {
-        var Role_Module = this.Parse.Object.extend("Role_Module");
-        var query = new this.Parse.Query(Role_Module);
-        query.equalTo("roleId", roleId);
-
-        let promise = new Promise<any>((resolve, reject) => {
-            query.first({
-                success: (roleModule) => {
-                    resolve(roleModule)
-                },
-                error: (error) => {
-                    reject("error");
-                }
-            });
-        });
-
-        return promise;
+        return null;
     }
 
     //修改或保存权限表
-    saveInfo(roleId: string, menuList: string): Promise<boolean>  {
-        let promise = new Promise<boolean>((resolve, reject) => {
-            this.getInfo(roleId).then(info => {
-                if (info == undefined) {
-                    var Role_Module = this.Parse.Object.extend("Role_Module");
-                    let role_Module = new Role_Module();
-                    role_Module.set("roleId", roleId);
-                    role_Module.set("menuList", menuList);
-                    role_Module.save(null, {
-                        success: function (role_ModuleScore) {
-                            resolve(true);
-                        },
-                        error: function (role_ModuleScore, error) {
-                            reject(false);
-                        }
-                    });
-                } else {
-                    info.set("menuList", menuList);
-                    info.save({
-                        success: (success) => { resolve(true); },
-                        error: (error) => { reject(false); }
-                    });
-                }
-            });
-        });
-
+    saveInfo(powers: Array<Power>): Promise<boolean> {
+        var DBInfo = new this.Parse.Parse.Object.extend(this.tableName);
+        var list = [];
+        powers.forEach(info => {
+            var dbInfo = this.setInfo(info, DBInfo);
+            list.push(dbInfo);
+        })
+        let promise = this.Parse.addAll(list);
         return promise;
+    }
+
+    getMenuList() {
+        let table = this.Parse.Parse.Object.extend("Menu");
+        let query = new this.Parse.Parse.Query(table);
+        query.equalTo("isLeaf", true);
+        let promise = this.Parse.findWhere2<NavMenu>(query,NavMenu);
+        return promise;
+    }
+
+    private setInfo(power: Power, dbInfo: any) {
+        dbInfo.set("id", power.id);
+        dbInfo.set("title", power.title);
+        dbInfo.set("code", power.code);
+        dbInfo.set("url", power.url);
+        dbInfo.set("type", power.type);
+        dbInfo.set("explain", power.explain);
+        dbInfo.set("isValid", power.isValid);
+        return dbInfo;
     }
 }

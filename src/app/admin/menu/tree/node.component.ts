@@ -64,11 +64,22 @@ export class NodeComponent implements OnInit {
             this.menuService.findbyPid(id).then(list => {
                 if (list.length > 0) {
                     alert("有子菜单不能删除，请先删除子菜单！");
+                    return;
                 } else {
                     this.menuService.delete(id).then(val => {
-                        this.router.navigateByUrl("/admin/menu", { skipLocationChange: true });
-                        alert("删除" + val ? "成功！" : "失败！");
-                        this.onDelete.emit(pid);
+                        this.menuService.findbyPid(pid).then(list => {
+                            if (list.length <= 0) {
+                                this.menuService.getInfo(pid).then(val => {
+                                    val.isLeaf = true;
+                                    this.menuService.add(val).then(info => {
+                                        alert("删除成功！");
+                                    });
+                                })
+                            }else{
+                                 alert("删除成功!");
+                            }
+                            this.onDelete.emit(pid);
+                        })
                     });
                 }
             })

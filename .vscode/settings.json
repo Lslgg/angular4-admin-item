@@ -1,5 +1,12 @@
 {
-    "angulardoc.repoId": "440534e6-4a5f-49a3-a9ca-c83c640fb6c5",
-    "angulardoc.lastSync": 1492401634950,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "node_modules":true,
+        "e2e":true
+    },
     "vsicons.presets.angular": true
 }

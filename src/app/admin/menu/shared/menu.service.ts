@@ -11,6 +11,7 @@ export class MenuService {
 
     constructor(@Inject("parse") parse: ParserServer) {
         this.Parse = parse;
+        
     }
 
     public add(menu: Menu): Promise<boolean> {
@@ -45,6 +46,7 @@ export class MenuService {
         dbInfo.set("code", menu.code);
         dbInfo.set("url", menu.url);
         dbInfo.set("pid", menu.pid);
+        dbInfo.set("isLeaf",menu.isLeaf);
         dbInfo.set("isValid", menu.isValid);
         return dbInfo;
     }

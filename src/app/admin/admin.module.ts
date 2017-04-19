@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Jsonp, URLSearchParams } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { DropdownModule } from 'ng2-bootstrap/dropdown';
-import { TabsModule } from 'ng2-bootstrap/tabs';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { MenuModule } from './menu/menu.module';
 
 import { CommonModule as SystemCommonModule } from '@angular/common';
-import { HeaderComponent, FooterComponent, SidebarComponent, AsideComponent } from './layouts';
+import { HeaderComponent, FooterComponent, SidebarComponent } from './layouts';
 
 import { BreadcrumbsComponent } from './common/component/crumbs'
 
@@ -34,10 +34,10 @@ import { CardLogService } from './cardLog/shared/cardLog.service';
     SystemCommonModule,
     FormsModule,
     HttpModule,
+    BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
     MyCommonModule,
     TemplateModule,
-    DropdownModule.forRoot(),
-    TabsModule.forRoot(),
     AdminRoutingModule,
     MenuModule
   ],
@@ -46,7 +46,6 @@ import { CardLogService } from './cardLog/shared/cardLog.service';
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
-    AsideComponent,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
     NAV_DROPDOWN_DIRECTIVES,

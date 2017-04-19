@@ -1,13 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-
 import { AppComponent } from './app.component';
-import { DropdownModule } from 'ng2-bootstrap/dropdown';
-import { TabsModule } from 'ng2-bootstrap/tabs';
-
-import { ChartsModule } from 'ng2-charts/ng2-charts';
-
 // Routing Module
 import { AppRoutingModule } from './app.routing';
 import { AdminModule } from './admin/admin.module';
@@ -22,10 +16,7 @@ import { Global } from './common/global';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AdminModule,
-    DropdownModule.forRoot(),
-    TabsModule.forRoot(),
-    ChartsModule
+    AdminModule
   ],
   declarations: [
     AppComponent,
