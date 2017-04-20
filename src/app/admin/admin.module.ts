@@ -4,30 +4,18 @@ import { HttpModule, Jsonp, URLSearchParams } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
-
+import { AuthGuard } from './common/server/auth-guard.service';
 import { MenuModule } from './menu/menu.module';
-
 import { CommonModule as SystemCommonModule } from '@angular/common';
 import { HeaderComponent, FooterComponent, SidebarComponent } from './layouts';
-
 import { BreadcrumbsComponent } from './common/component/crumbs'
-
 import { AdminComponent } from './admin.component';
-
 import { AdminRoutingModule, ComponentList } from './admin.routing';
-
-import {
-  SIDEBAR_TOGGLE_DIRECTIVES,
-  NAV_DROPDOWN_DIRECTIVES,
-  AsideToggleDirective
-} from './common/directive';
-
-
-
+import { SIDEBAR_TOGGLE_DIRECTIVES, NAV_DROPDOWN_DIRECTIVES, AsideToggleDirective } from './common/directive';
 import { CommonModule as MyCommonModule } from './common/common.module';
 import { TemplateModule } from './template/template.module'
-
 import { CardLogService } from './cardLog/shared/cardLog.service';
+import{ CheckedPipe } from './power/shared/power.pipe'
 
 @NgModule({
   imports: [
@@ -50,6 +38,7 @@ import { CardLogService } from './cardLog/shared/cardLog.service';
     SIDEBAR_TOGGLE_DIRECTIVES,
     NAV_DROPDOWN_DIRECTIVES,
     AsideToggleDirective,
+    CheckedPipe,
     ComponentList
   ],
   providers: [
@@ -57,7 +46,8 @@ import { CardLogService } from './cardLog/shared/cardLog.service';
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     },
-    CardLogService
+    CardLogService,
+    AuthGuard
   ],
   bootstrap: [
     AdminComponent

@@ -1,16 +1,7 @@
 <template-panel-table>
     <div plane-body>
         <div class="row">
-            <div class="col-md-3">
-                <ul>
-                    <ng-container *ngFor="let item of roleList">
-                        <li>
-                            <a href="javascript:void(0)" (click)="onRoleClick(item.id,item.roleName)" class="btn btn-raised">{{ item.roleName }}</a>
-                        </li>
-                    </ng-container>
-                </ul>
-            </div>
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="form-group">
                     <div class="input-group">
                         <button class="btn btn-primary" type="button"  data-toggle="modal" (click)="lgAddModal.show()"><i class="fa fa-plus"></i> 添加</button>
@@ -45,7 +36,7 @@
                                 </ng-container>
                             </td>
                             <th>
-                                <a href="javascript:void(0)" (click)="onUpInfo(power.id)">修改</a>
+                                <a href="javascript:void(0)" (click)="lgFunModal.show();onGetPowerFun(power)">功能权限</a>
                                 <a href="javascript:void(0)" (click)="onDelInfo(power.id)">删除</a>
                             </th>
                         </tr>
@@ -141,6 +132,32 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" (click)="lgAddModal.hide()" aria-label="Close">关闭</button>
                         <button class="btn btn-primary" type="button" (click)="onSubmit();lgAddModal.hide()" aria-label="Close">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <div bsModal #lgFunModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-ls">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title pull-left">功能权限</h4>
+                        <button type="button" class="close pull-right" (click)="lgFunModal.hide()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ol>
+                            <li><input type="checkbox" [checked]="'SHOW' | Checked: nowPower.operation" value="SHOW" (change)="onFunCheck($event)"> 查看 </li>
+                            <li><input type="checkbox" [checked]="'ADD' | Checked: nowPower.operation" value="ADD" (change)="onFunCheck($event)"> 添加 </li>
+                            <li><input type="checkbox" [checked]="'UPDATE' | Checked: nowPower.operation" value="UPDATE" (change)="onFunCheck($event)"> 修改 </li>
+                            <li><input type="checkbox" [checked]="'DELETE' | Checked: nowPower.operation" value="DELETE" (change)="onFunCheck($event)"> 删除 </li>
+                            <li><input type="checkbox" [checked]="'CHECK' | Checked: nowPower.operation"value="CHECK" (change)="onFunCheck($event)"> 审核 </li>
+                        </ol>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" (click)="lgFunModal.hide()" aria-label="Close">关闭</button>
+                        <button class="btn btn-primary" type="button" (click)="onSaveFunPower();lgFunModal.hide()" aria-label="Close">保存</button>
                     </div>
                 </div>
             </div>

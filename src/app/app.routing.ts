@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
 import { LoginComponent } from './admin/login/login.component';
 
+//import { AuthGuard } from './admin/common/server/auth-guard.service';
 
 export const routes: Routes = [
   {
@@ -15,6 +16,7 @@ export const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
+    //canActivate: [AuthGuard],
     data: {
       title: '首页'
     },
