@@ -11,6 +11,10 @@ export class Power{
     public operation:Array<string>=new Array<string>();
 }
 
+export class RolePower extends Power{
+    public roleId:string;
+}
+
 export class NavMenu{
     public id:string;
     public code:string;
@@ -27,5 +31,12 @@ export class PowerFun{
     public isUPDATE:boolean;
     public isDELETE:boolean;
     public isCHECK:boolean;
+}
+
+export class RoleInfo{
+    public id:string;
+    public roleName:string;
+    public name:string;
+    public desc:string;
 }
 

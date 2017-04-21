@@ -13,8 +13,7 @@
             <div class="col-md-9">
                 <div class="form-group">
                     <div class="input-group">
-                        <button class="btn btn-primary" type="button"  data-toggle="modal" (click)="lgAddModal.show()"><i class="fa fa-plus"></i> 添加</button>
-                        <button class="btn btn-info" type="button" data-toggle="modal" (click)="lgModal.show()"><i class="fa fa-edit"></i>选择菜单</button>
+                        <button class="btn btn-info" type="button" data-toggle="modal" (click)="lgModal.show()"><i class="fa fa-edit"></i>选择权限</button>
                         <button class="btn btn-danger" type="button" (click)="delete()"><i class="fa fa-minus"></i> 删除</button>
                     </div>
                 </div>
@@ -24,29 +23,24 @@
                             <input type="checkbox" name="checkAllPower" (click)="allchecked(checkAllPower.checked,2)" #checkAllPower>
                         </th>
                         <th>名称</th>
-                        <th>url</th>
-                        <th>状态</th>
+                        <th>功能权限</th>
                         <th>操作</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let power of PowerList">
+                        <tr *ngFor="let rolePower of rolePowerList">
                             <td>
-                                <input type="checkbox" [checked]="power.isChecked" name="checkboxPower" id="checkboxPower" (change)="oncheckedPower(power,checkboxPower.checked)"
+                                <input type="checkbox" [checked]="rolePower.isChecked" name="checkboxPower" 
+                                    id="checkboxPower" (change)="oncheckedRolePower(rolePower,checkboxPower.checked)"
                                     #checkboxPower>
                             </td>
-                            <td>{{power.title}}</td>
-                            <td>{{power.url}}</td>
+                            <td>{{rolePower.title}}</td>
                             <td>
-                                <ng-container *ngIf="power.isValid">
-                                    <span class="badge badge-success">有效</span>
-                                </ng-container>
-                                <ng-container *ngIf="!power.isValid">
-                                    <span class="badge badge-default">无效</span>
+                                <ng-container *ngFor="let item of rolePower.operation">
+                                    <span class="badge badge-success">{{ item }}</span>
                                 </ng-container>
                             </td>
                             <th>
-                                <a href="javascript:void(0)" (click)="onUpInfo(power.id)">修改</a>
-                                <a href="javascript:void(0)" (click)="onDelInfo(power.id)">删除</a>
+                                <a href="javascript:void(0)" (click)="onDelInfo(rolePower.id)">删除</a>
                             </th>
                         </tr>
                     </tbody>
@@ -57,7 +51,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title pull-left">菜单列表</h4>
+                        <h4 class="modal-title pull-left">权限列表</h4>
                         <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -69,17 +63,19 @@
                                     <input type="checkbox" name="checkAll" (click)="allchecked(checkAll.checked,1)" #checkAll>
                                 </th>
                                 <th>名称</th>
-                                <th>url</th>
+                                <th>功能权限</th>
                                 <th>状态</th>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let menu of NaveMenulist">
+                                <tr *ngFor="let menu of powerList">
                                     <td>
-                                        <input type="checkbox" [checked]="menu.isChecked" name="checkbox" id="checkbox" (change)="oncheckedMenu(menu,checkbox.checked)"
-                                            #checkbox>
+                                        <input type="checkbox" [checked]="menu.isChecked" name="checkbox" 
+                                            id="checkbox" (change)="oncheckedMenu(menu,checkbox.checked)" #checkbox>
                                     </td>
                                     <td>{{menu.title}}</td>
-                                    <td>{{menu.url}}</td>
+                                    <td>
+
+                                    </td>
                                     <td>
                                         <ng-container *ngIf="menu.isValid">
                                             <span class="badge badge-success">有效</span>
@@ -95,52 +91,6 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" (click)="lgModal.hide()" aria-label="Close">关闭</button>
                         <button class="btn btn-primary" type="button" (click)="onSave();lgModal.hide()" aria-label="Close">保存</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div bsModal #lgAddModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title pull-left">添加权限</h4>
-                        <button type="button" class="close pull-right" (click)="lgAddModal.hide()" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form #f="ngForm" class="form-horizontal">
-                            <div class="form-group">
-                                <label for="name" class="col-md-2 control-label" >名称</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" [(ngModel)]="power.title" name="power.title" id="power.title">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="code" class="col-md-2 control-label" >编号</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" [(ngModel)]="power.code" name="power.code" id="power.code">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="url" class="col-md-2 control-label" >Url</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" [(ngModel)]="power.url" name="power.url" id="power.url">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <div class="">
-                                        <label><input type="checkbox" [(ngModel)]="power.isValid" name="power.isValid" id="power.isValid"> 是否启用</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" (click)="lgAddModal.hide()" aria-label="Close">关闭</button>
-                        <button class="btn btn-primary" type="button" (click)="onSubmit();lgAddModal.hide()" aria-label="Close">保存</button>
                     </div>
                 </div>
             </div>

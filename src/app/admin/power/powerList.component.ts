@@ -31,9 +31,7 @@ export class PowerListComponent implements OnInit {
             this.NaveMenulist = list;
         });
 
-        this.powerService.getPowerList().then(list => {
-            this.PowerList = list;
-        });
+        this.getPowerList();
     }
 
     ngOnInit() { }
@@ -61,7 +59,7 @@ export class PowerListComponent implements OnInit {
                 var power = new Power();
                 power.id = "";
                 power.code = "00001";
-                power.explain = "来自己系统的菜单";
+                power.explain = "来自系统的菜单";
                 power.title = val.title;
                 power.type = "系统菜单";
                 power.url = val.url;
@@ -73,20 +71,25 @@ export class PowerListComponent implements OnInit {
         });
         this.powerService.saveInfo(list).then(success => {
             alert(success ? "添加成功！" : "添加失败！");
-            this.powerService.getPowerList().then(list => {
-                this.PowerList = list;
-            });
+            this.getPowerList();
         })
     }
 
     onSubmit() {
-        this.power.explain = "自己定义权限菜单";
-        this.power.type = "自己义";
+        this.power.explain = "自定义权限菜单";
+        this.power.type = "自定义";
         this.power.operation = ["SHOW", "ADD", "UPDATE", "DELETE"];
         this.powerService.saveInfo([this.power]).then(success => alert(success ? "成功！" : "失败！"));
     }
 
     onDelInfo(id: string) {
+        if (confirm("确认要删除！")) {
+            this.powerService.delete(id).then(success => {
+                alert(success ? "成功！" : "失败！");
+                this.getPowerList();
+
+            }).catch(error => alert("出现系统问题！"))
+        }
 
     }
 
@@ -108,5 +111,26 @@ export class PowerListComponent implements OnInit {
         if (checked) this.operation.push(value);
 
         this.nowPower.operation = this.operation;
+    }
+
+    onCheckboDelete() {
+        if (confirm("确认要删除！")) {
+            var isTip=true;
+            this.PowerList.forEach(val => {
+                if (val.isChecked) {
+                    this.powerService.delete(val.id).then(succes => {
+                        if(isTip) alert("删除成功！");
+                        isTip=false;
+                        this.getPowerList();
+                    })
+                }
+            });
+        }
+    }
+
+    private getPowerList() {
+        this.powerService.getPowerList().then(list => {
+            this.PowerList = list;
+        });
     }
 }

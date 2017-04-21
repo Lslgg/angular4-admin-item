@@ -6,7 +6,7 @@
                     <div class="input-group">
                         <button class="btn btn-primary" type="button"  data-toggle="modal" (click)="lgAddModal.show()"><i class="fa fa-plus"></i> 添加</button>
                         <button class="btn btn-info" type="button" data-toggle="modal" (click)="lgModal.show()"><i class="fa fa-edit"></i>选择菜单</button>
-                        <button class="btn btn-danger" type="button" (click)="delete()"><i class="fa fa-minus"></i> 删除</button>
+                        <button class="btn btn-danger" type="button" (click)="onCheckboDelete()"><i class="fa fa-minus"></i> 删除</button>
                     </div>
                 </div>
                 <table class="table table-bordered table-striped table-condensed">
@@ -22,7 +22,8 @@
                     <tbody>
                         <tr *ngFor="let power of PowerList">
                             <td>
-                                <input type="checkbox" [checked]="power.isChecked" name="checkboxPower" id="checkboxPower" (change)="oncheckedPower(power,checkboxPower.checked)"
+                                <input type="checkbox" [checked]="power.isChecked" name="checkboxPower" 
+                                    id="checkboxPower" value="power.id" (change)="oncheckedPower(power,checkboxPower.checked)"
                                     #checkboxPower>
                             </td>
                             <td>{{power.title}}</td>

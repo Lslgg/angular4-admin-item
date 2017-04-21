@@ -31,6 +31,6 @@ interface ParserServer {
 
     findWhere<T>(query: any): Promise<Array<T>>;
 
-    findWhere2<T>(query: any,tClass: { new (): T });
+    findWhere2<T>(query: any,tClass: { new (): T }): Promise<Array<T>>;
 }
 

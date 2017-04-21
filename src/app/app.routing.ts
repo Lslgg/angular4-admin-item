@@ -10,7 +10,7 @@ import { LoginComponent } from './admin/login/login.component';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
@@ -21,10 +21,6 @@ export const routes: Routes = [
       title: '首页'
     },
     children: [
-      {
-        path: 'dashboard',
-        loadChildren: './admin/admin.module#AdminModule'
-      },
       {
         path: 'admin',
         loadChildren: './admin/admin.module#AdminModule'

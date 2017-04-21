@@ -1,11 +1,3 @@
-
-export class menu{
-    public id:string;
-    public pid:string;
-    public title:string;
-    public url:string="http://www.baidu.com";
-}
-
 export class Parse implements ParserServer {
 
     public Parse: any;
@@ -220,7 +212,7 @@ export class Parse implements ParserServer {
     /*
     * 条件查找
     */
-    public findWhere2<T>(query: any,tClass: { new (): T }){
+    public findWhere2<T>(query: any,tClass: { new (): T }): Promise<Array<T>>{
          let promise = new Promise<Array<T>>((resolve, reject) => {
             query.find({
                 success: (result: Array<T>) => {

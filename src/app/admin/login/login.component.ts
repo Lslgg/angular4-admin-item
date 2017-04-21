@@ -23,7 +23,8 @@ export class LoginComponent implements OnInit {
     onLogin(account:string,pwd:string){
 		this.loginService.login(account,pwd)
 		.then((val)=>{
-			this.router.navigate(['/dashboard']);
+            console.log(val);
+			this.router.navigate(['/admin/index']);
 		}).catch((v)=>{
 			alert("用户名密码错误，请输入正确的用户或密码！");
 			this.router.navigate(['/login']);
