@@ -51,7 +51,7 @@
                 <div class="col-md-10">
                     <select [(ngModel)]="user.roleId" name="roleId" id="roleId" class="form-control">
                         <ng-container *ngFor="let item of roleList">
-                            <option value="{{ item.name }}">{{ item.roleName }}</option>
+                            <option value="{{ item.id }}">{{ item.roleName }}</option>
                         </ng-container>    
                     </select>
                 </div>

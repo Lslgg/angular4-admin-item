@@ -8,7 +8,7 @@ export class PowerService {
 
     tableName: string = "power"
 
-    constructor( @Inject("parse") parse: ParserServer) {
+    constructor(@Inject("parse") parse: ParserServer) {
         this.Parse = parse;
     }
 
@@ -60,7 +60,7 @@ export class PowerService {
     getPowerList(): Promise<Array<Power>> {
         let table = this.Parse.Parse.Object.extend(this.tableName);
         let query = new this.Parse.Parse.Query(table);
-        let promise = this.Parse.findWhere<Power>(query);
+        let promise = this.Parse.findWhere2<Power>(query,Power);
         return promise;
     }
 
@@ -73,6 +73,11 @@ export class PowerService {
 
     delete(id: string): Promise<boolean> {
         let promise = this.Parse.delete(id, this.tableName);
+        return promise;
+    }
+
+    deleteRolePower(id: string): Promise<boolean> {
+        let promise = this.Parse.delete(id, "RolePower");
         return promise;
     }
 
@@ -107,5 +112,15 @@ export class PowerService {
         dbInfo.set("roleId", power.roleId);
         dbInfo.set("operation", power.operation);
         return dbInfo;
+    }
+
+    public operationMap():Array<string>{
+        var operatinMap=[];
+        operatinMap["SHOW"] = "查看";
+        operatinMap["ADD"] = "添加";
+        operatinMap["UPDATE"] = "修改";
+        operatinMap["DELETE"] = "删除";
+        operatinMap["CHECK"] = "审核";
+        return operatinMap;
     }
 }

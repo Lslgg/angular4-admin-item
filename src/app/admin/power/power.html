@@ -1,50 +1,72 @@
 <template-panel-table>
     <div plane-body>
         <div class="row">
-            <div class="col-md-3">
-                <ul>
-                    <ng-container *ngFor="let item of roleList">
-                        <li>
-                            <a href="javascript:void(0)" (click)="onRoleClick(item.id,item.roleName)" class="btn btn-raised">{{ item.roleName }}</a>
-                        </li>
-                    </ng-container>
-                </ul>
-            </div>
-            <div class="col-md-9">
-                <div class="form-group">
-                    <div class="input-group">
-                        <button class="btn btn-info" type="button" data-toggle="modal" (click)="lgModal.show()"><i class="fa fa-edit"></i>选择权限</button>
-                        <button class="btn btn-danger" type="button" (click)="delete()"><i class="fa fa-minus"></i> 删除</button>
+            <div class="col-md-2 left">
+                <div class="card">
+                    <div class="card-header">
+                        角色({{ noewRoleName }})
+                        <span class="badge badge-pill badge-danger float-right">{{roleListCount}}</span>
+                    </div>
+                    <div class="card-block">
+                        <ul>
+                            <li>
+                                <p menuhover>
+                                    <i class="fa fa-folder-open" id="0" menuroot></i> 角色 
+                                </p>
+                                <ul class="menu_0">
+                                    <li *ngFor="let role of roleList" class="ul_li">
+                                        <p menuhover (click)="onRoleClick(role.id,role.roleName)">
+                                            <i class="fa fa-file"></i> {{ role.roleName }}
+                                        </p>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <table class="table table-bordered table-striped table-condensed">
-                    <thead>
-                        <th>
-                            <input type="checkbox" name="checkAllPower" (click)="allchecked(checkAllPower.checked,2)" #checkAllPower>
-                        </th>
-                        <th>名称</th>
-                        <th>功能权限</th>
-                        <th>操作</th>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let rolePower of rolePowerList">
-                            <td>
-                                <input type="checkbox" [checked]="rolePower.isChecked" name="checkboxPower" 
-                                    id="checkboxPower" (change)="oncheckedRolePower(rolePower,checkboxPower.checked)"
-                                    #checkboxPower>
-                            </td>
-                            <td>{{rolePower.title}}</td>
-                            <td>
-                                <ng-container *ngFor="let item of rolePower.operation">
-                                    <span class="badge badge-success">{{ item }}</span>
-                                </ng-container>
-                            </td>
-                            <th>
-                                <a href="javascript:void(0)" (click)="onDelInfo(rolePower.id)">删除</a>
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
+            </div>
+            <div class="col-md-10 right">
+                <div class="card">
+                    <div class="card-header">
+                        权限模块
+                        <span class="badge badge-pill badge-danger float-right">{{rolePowerCount}}</span>
+                    </div>
+                    <div class="card-block">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <button class="btn btn-info" type="button" data-toggle="modal" (click)="lgModal.show()"><i class="fa fa-edit"></i>选择权限</button>
+                                <button class="btn btn-danger" type="button" (click)="onDeleteAll()"><i class="fa fa-minus"></i> 删除</button>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <th>
+                                    <input type="checkbox" name="checkAllPower" (click)="allchecked(checkAllPower.checked,2)" #checkAllPower>
+                                </th>
+                                <th>名称</th>
+                                <th>功能权限</th>
+                                <th>操作</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let rolePower of rolePowerList">
+                                    <td>
+                                        <input type="checkbox" [checked]="rolePower.isChecked" name="checkboxPower" id="checkboxPower" (change)="oncheckedRolePower(rolePower,checkboxPower.checked)"
+                                            #checkboxPower>
+                                    </td>
+                                    <td>{{rolePower.title}}</td>
+                                    <td>
+                                        <ng-container *ngFor="let item of rolePower.operation">
+                                            <span class="badge badge-success">{{ operationMap[item] }}</span>
+                                        </ng-container>
+                                    </td>
+                                    <th>
+                                        <a href="javascript:void(0)" (click)="onDelInfo(rolePower.id)">删除</a>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
         <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -64,24 +86,20 @@
                                 </th>
                                 <th>名称</th>
                                 <th>功能权限</th>
-                                <th>状态</th>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let menu of powerList">
                                     <td>
-                                        <input type="checkbox" [checked]="menu.isChecked" name="checkbox" 
-                                            id="checkbox" (change)="oncheckedMenu(menu,checkbox.checked)" #checkbox>
+                                        <input type="checkbox" [checked]="menu.isChecked" name="checkbox" id="checkbox" (change)="oncheckedMenu(menu,checkbox.checked)"
+                                            #checkbox>
                                     </td>
                                     <td>{{menu.title}}</td>
                                     <td>
-
-                                    </td>
-                                    <td>
-                                        <ng-container *ngIf="menu.isValid">
-                                            <span class="badge badge-success">有效</span>
-                                        </ng-container>
-                                        <ng-container *ngIf="!menu.isValid">
-                                            <span class="badge badge-default">无效</span>
+                                        <input type="checkbox" name="operationCheckbox" [checked]="true" (change)="onOperationCheckAll(menu,operationCheckbox.checked)"
+                                            #operationCheckbox/> 全选 |
+                                        <ng-container *ngFor="let item of menu.operationChecked">
+                                            <input type="checkbox" [checked]="item | Checked: menu.operation" value="{{ item }}" (change)="onChekPower(menu,$event)"
+                                            /> {{ operationMap[item] }}
                                         </ng-container>
                                     </td>
                                 </tr>

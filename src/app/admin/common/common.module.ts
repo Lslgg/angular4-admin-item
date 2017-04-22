@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule as SysteCommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { CommonComponent }   from './common.component';
+import { CommonComponent } from './common.component';
 import { EqualValidator } from './directive/equal.directive'
 
 import {
@@ -11,6 +11,8 @@ import {
     TableOperationComponent,
     TableModule,
     FormFooterComponent,
+    NotFindPageComponent,
+    NotPowerComponent
 } from './component/index';
 
 
@@ -25,9 +27,11 @@ import {
         CrumbsComponent,
         TableOperationComponent,
         EqualValidator,
-        FormFooterComponent
+        FormFooterComponent,
+        NotFindPageComponent,
+        NotPowerComponent
     ],
-    exports:[
+    exports: [
         CommonComponent,
         NavComponent,
         TableModule,
@@ -35,6 +39,8 @@ import {
         TableOperationComponent,
         EqualValidator,
         FormFooterComponent,
+        NotFindPageComponent,
+        NotPowerComponent
     ],
     bootstrap: [CommonComponent],
 })

@@ -12,7 +12,7 @@ import { Parse } from './common/parse';
 import { CommonHttp } from './common/commonHttp';
 import { Global } from './common/global';
 
-//import { AuthGuard } from './admin/common/server/auth-guard.service';
+import { AuthGuard } from './admin/common/server/auth-guard.service';
 
 @NgModule({
   imports: [
@@ -29,7 +29,7 @@ import { Global } from './common/global';
     { provide: 'parse', useClass: Parse },
     { provide: 'commonHttp', useClass: CommonHttp },
     { provide: 'global', useClass: Global },
-    //AuthGuard
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -6,11 +6,11 @@ import { Component, OnInit, Input,Inject } from '@angular/core';
 })
 
 export class PanelTableComponent implements OnInit {
-    Global:any;
-    constructor(@Inject("global") global
 
-    ) { 
-        this.Global=global;
+    urlTitle:string;
+
+    constructor(@Inject("global") global:Global) { 
+        this.urlTitle=global.urlTitle;
     }
 
     ngOnInit() {

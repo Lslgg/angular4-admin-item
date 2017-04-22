@@ -1,4 +1,4 @@
-import { Component, OnInit,trigger } from '@angular/core';
+import { Component, OnInit, trigger } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { User } from '../common/module/index';
 import { FormGroup } from '@angular/forms';
@@ -14,13 +14,13 @@ import { RoleService } from '../role/shared/role.service';
 export class AddUserComponent implements OnInit {
 
 
-    submitValue: string="添加";
-    
-    isShowPwd:boolean=false;
-    
+    submitValue: string = "添加";
+
+    isShowPwd: boolean = false;
+
     user: User;
 
-    roleList: Array<{ name: string, roleName: string }>;
+    roleList: Array<{ id: string, name: string, roleName: string }>;
 
     constructor(
         private router: Router,
@@ -32,14 +32,14 @@ export class AddUserComponent implements OnInit {
         let userid = this.route.snapshot.params['id'];
         if (userid == undefined) {
             this.submitValue = "添加";
-            this.isShowPwd=false;
+            this.isShowPwd = false;
         } else {
             this.submitValue = "修改";
-            this.isShowPwd=true;
+            this.isShowPwd = true;
             this.userService.getUserInfo(userid).then(user => {
                 this.user = user;
-                this.user.passWord="123456";
-                this.user.confirmpassword="123456";
+                this.user.passWord = "123456";
+                this.user.confirmpassword = "123456";
             });
         }
 
@@ -48,7 +48,8 @@ export class AddUserComponent implements OnInit {
             roles.forEach((role, index) => {
                 let name = role.name;
                 let roleName = role.roleName;
-                this.roleList[index] = { name: name, roleName: roleName };
+                let id = role.id;
+                this.roleList[index] = { id, name, roleName };
             });
         });
     }
@@ -56,9 +57,9 @@ export class AddUserComponent implements OnInit {
     ngOnInit() {
 
     }
-    
+
     onSubmit() {
-        let currentUser=this.userService.getCurrentUser();
+        let currentUser = this.userService.getCurrentUser();
         let user = this.userService.addUser(this.user);
         user.then((value) => {
             alert(this.user.id != undefined ? "修改用户成功！" : "添加用户成功！");
@@ -70,5 +71,5 @@ export class AddUserComponent implements OnInit {
 
     onBack() {
         this.router.navigate(['admin/user']);
-    }    
+    }
 }

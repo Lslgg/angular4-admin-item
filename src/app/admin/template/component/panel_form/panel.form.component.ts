@@ -5,11 +5,11 @@ import { Component, OnInit, Input,Inject } from '@angular/core';
     templateUrl: 'panel.form.html'
 })
 export class PanelFormComponent implements OnInit {
-    Global:any;
-    constructor(@Inject("global") global
 
-    ) { 
-        this.Global=global;
+    urlTitle:string;
+
+    constructor(@Inject("global") global:Global) { 
+        this.urlTitle=global.urlTitle;
     }
 
     ngOnInit() {

@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { User } from '../module/index';
 
 import {
     CanActivate, Router,
@@ -7,16 +8,39 @@ import {
     CanActivateChild
 } from '@angular/router';
 
+export class AuthPower {
+    public id: string;
+    public url: string;
+    public operation: Array<string> = new Array<string>();
+}
+
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
-
-    constructor(
-        private router: Router) { }
+    parseServer: ParserServer;
+    constructor( @Inject("parse") parse: ParserServer,
+        private router: Router) {
+        this.parseServer = parse;
+    }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> | boolean {
-        let url: string = state.url;
-        let promise = new Promise<boolean>((resolve, reject) => { 
-            resolve(true);
+        let promise = new Promise<boolean>((resolve, reject) => {
+            var urlData = route.data;
+            let url = urlData["module"];
+            let power = urlData["power"];
+            if (url == "index") resolve(true);
+            if (url == "notPower") resolve(true);
+            var isSuccess = false;
+            this.getRolrPowerList().then(list => {
+                list.forEach(val => {
+                    var index = val.operation.indexOf(power);
+                    if (val.url == url && index > -1) {
+                        isSuccess = true;
+                    }
+                });
+                resolve(isSuccess);
+            }).catch(error => {
+                reject(false);
+            })
         });
 
         return promise;
@@ -26,4 +50,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         return this.canActivate(route, state);
     }
 
+    getRolrPowerList(): Promise<Array<AuthPower>> {
+        var currentUser = this.parseServer.Parse.User.current();
+        let roleId = currentUser.get("roleId");
+        var rolePower = this.parseServer.setQuery("RolePower");
+        rolePower.equalTo("roleId", roleId);
+        let promise = this.parseServer.findWhere<AuthPower>(rolePower);
+        return promise;
+    }
 }

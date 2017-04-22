@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
 
     LogOut(){
         this.Parse.User.logOut().then(() => {
-            alert("成功退出！");
+            alert("已成功退出！");
             this.router.navigate(['login']);
         });
     }

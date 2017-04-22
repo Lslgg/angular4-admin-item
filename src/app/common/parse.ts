@@ -90,10 +90,10 @@ export class Parse implements ParserServer {
         return promise;
     }
 
-     /*
-    * 根据ID查找
-    */
-    public getInfo2<T>(id: string, tableName: string,tClass: { new (): T }): Promise<T> {
+    /*
+   * 根据ID查找
+   */
+    public getInfo2<T>(id: string, tableName: string, tClass: { new (): T }): Promise<T> {
         var table = this.Parse.Object.extend(tableName);
         var query = new this.Parse.Query(table);
         let promise = new Promise<any>((resolve, reject) => {
@@ -144,7 +144,7 @@ export class Parse implements ParserServer {
     /*
     * 分页查找
     */
-    public findPage2<T>(pageIndex: number, pageSize: number, tableName: string,tClass: { new (): T }): Promise<T> {
+    public findPage2<T>(pageIndex: number, pageSize: number, tableName: string, tClass: { new (): T }): Promise<T> {
         let table = this.Parse.Object.extend(tableName);
         let query = new this.Parse.Query(table);
         query.skip((pageIndex - 1) * pageSize);
@@ -212,8 +212,8 @@ export class Parse implements ParserServer {
     /*
     * 条件查找
     */
-    public findWhere2<T>(query: any,tClass: { new (): T }): Promise<Array<T>>{
-         let promise = new Promise<Array<T>>((resolve, reject) => {
+    public findWhere2<T>(query: any, tClass: { new (): T }): Promise<Array<T>> {
+        let promise = new Promise<Array<T>>((resolve, reject) => {
             query.find({
                 success: (result: Array<T>) => {
                     let list: Array<T> = new Array<T>();
@@ -230,5 +230,25 @@ export class Parse implements ParserServer {
             });
         });
         return promise;
+    }
+
+    /** 
+     * 当前登录ID
+     */
+    public getCurrentUserId(): string {
+        var currentUser = this.Parse.User.current();
+        return currentUser["id"];
+    }
+    
+    public setQuery(tableName: string): any {
+        var table = this.Parse.Object.extend(tableName);
+        var query = new this.Parse.Query(table);
+        return query;
+    }
+
+    public setParseObj(tableName: string): any {
+        var DBInfo = this.Parse.Object.extend(tableName);
+        var dbInfo = new DBInfo();
+        return dbInfo;
     }
 }

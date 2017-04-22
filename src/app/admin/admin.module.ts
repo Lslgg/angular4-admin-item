@@ -4,7 +4,6 @@ import { HttpModule, Jsonp, URLSearchParams } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { AuthGuard } from './common/server/auth-guard.service';
 import { MenuModule } from './menu/menu.module';
 import { CommonModule as SystemCommonModule } from '@angular/common';
 import { HeaderComponent, FooterComponent, SidebarComponent } from './layouts';
@@ -15,7 +14,7 @@ import { SIDEBAR_TOGGLE_DIRECTIVES, NAV_DROPDOWN_DIRECTIVES, AsideToggleDirectiv
 import { CommonModule as MyCommonModule } from './common/common.module';
 import { TemplateModule } from './template/template.module'
 import { CardLogService } from './cardLog/shared/cardLog.service';
-import{ CheckedPipe } from './power/shared/power.pipe'
+import { CheckedPipe, KeysPipe } from './power/shared/power.pipe'
 
 @NgModule({
   imports: [
@@ -39,6 +38,7 @@ import{ CheckedPipe } from './power/shared/power.pipe'
     NAV_DROPDOWN_DIRECTIVES,
     AsideToggleDirective,
     CheckedPipe,
+    KeysPipe,
     ComponentList
   ],
   providers: [
@@ -47,7 +47,6 @@ import{ CheckedPipe } from './power/shared/power.pipe'
       useClass: HashLocationStrategy
     },
     CardLogService,
-    AuthGuard
   ],
   bootstrap: [
     AdminComponent

@@ -1,3 +1,3 @@
-export class Global{
-    public title:string="---";
+export class Global implements Global {
+    public urlTitle: string="";
 }

@@ -9,6 +9,8 @@ export class Power{
     public isValid:boolean;
     public isChecked:boolean=false;  
     public operation:Array<string>=new Array<string>();
+    public operationChecked:Array<string>=new Array<string>();
+    public operationMap:Array<string>=new Array<string>();
 }
 
 export class RolePower extends Power{
