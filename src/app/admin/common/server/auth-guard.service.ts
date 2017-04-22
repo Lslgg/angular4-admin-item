@@ -16,7 +16,9 @@ export class AuthPower {
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
+    
     parseServer: ParserServer;
+
     constructor( @Inject("parse") parse: ParserServer,
         private router: Router) {
         this.parseServer = parse;
