@@ -16,10 +16,10 @@ export class AuthPower {
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
-    
+
     parseServer: ParserServer;
 
-    constructor( @Inject("parse") parse: ParserServer,
+    constructor(@Inject("parse") parse: ParserServer,
         private router: Router) {
         this.parseServer = parse;
     }
@@ -29,8 +29,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
             var urlData = route.data;
             let url = urlData["module"];
             let power = urlData["power"];
-            if (url == "index") resolve(true);
-            if (url == "notPower") resolve(true);
+            if (url == "index" || url == "notPower" || url=="allpower") {
+                resolve(true);
+                return;
+            }
+
             var isSuccess = false;
             this.getRolrPowerList().then(list => {
                 list.forEach(val => {
@@ -39,7 +42,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
                         isSuccess = true;
                     }
                 });
-                resolve(isSuccess);
+                resolve(true);
+                if (!isSuccess) {
+                    this.router.navigate(['/admin/notPower']);
+                    return;
+                }
             }).catch(error => {
                 reject(false);
             })

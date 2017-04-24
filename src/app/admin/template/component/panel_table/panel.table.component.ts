@@ -9,8 +9,7 @@ export class PanelTableComponent implements OnInit {
 
     urlTitle:string;
 
-    constructor(@Inject("global") global:Global) { 
-        this.urlTitle=global.urlTitle;
+    constructor() { 
     }
 
     ngOnInit() {

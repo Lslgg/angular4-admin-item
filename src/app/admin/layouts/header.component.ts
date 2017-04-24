@@ -1,17 +1,22 @@
-import { Component, OnInit,Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { LayoutsService } from './shared/layouts.service';
 
 @Component({
     selector: 'layouts-header',
-    templateUrl: 'header.html'
+    templateUrl: 'header.html',
+    providers: [LayoutsService]
+
 })
 
 export class HeaderComponent implements OnInit {
     public disabled: boolean = false;
     public status: { isopen: boolean } = { isopen: false };
 
+    userName:string;
+
     public toggled(open: boolean): void {
-        console.log('Dropdown is now: ', open);
+
     }
 
     public toggleDropdown($event: MouseEvent): void {
@@ -20,26 +25,32 @@ export class HeaderComponent implements OnInit {
         this.status.isopen = !this.status.isopen;
     }
 
-    Parse:any;
+    Parse: any;
 
-    constructor(@Inject("parse") parse,private router:Router) { 
-        this.Parse=parse.Parse;
+    constructor( @Inject("parse") parse, private router: Router,
+        private layoutsService:LayoutsService) {
+        this.Parse = parse.Parse;
+        this.userName=this.layoutsService.getCurrentUserName();
+        if(this.userName==""){
+            alert("请登录！");
+            this.router.navigate(['login']);
+        }
     }
 
 
-    LogOut(){
+    LogOut() {
         this.Parse.User.logOut().then(() => {
             alert("已成功退出！");
             this.router.navigate(['login']);
         });
     }
 
-    upUserPwd(){
+    upUserPwd() {
         this.router.navigate(['/admin/upUserPwd']);
     }
 
-    upUserInfo(){
-         this.router.navigate(['/admin/upUserInfo']);
+    upUserInfo() {
+        this.router.navigate(['/admin/upUserInfo']);
     }
 
     ngOnInit() { }

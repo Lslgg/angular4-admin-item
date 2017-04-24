@@ -43,8 +43,4 @@ interface ParserServer {
     setParseObj(tableName:string):any;
 }
 
-interface Global {
-    urlTitle: string;
-}
-
 

@@ -12,7 +12,7 @@ import { PlayerComponent, AddPlayerComponent } from './player';
 import { SystemComponent } from './system';
 import { SystemLogComponent } from './systemLog';
 import { MenuComponent, AddMenuComponent } from './menu';
-import { NotFindPageComponent,NotPowerComponent} from './common/component/404';
+import { NotFindPageComponent, NotPowerComponent } from './common/component/404';
 
 const routes: Routes = [
   { path: '', component: IndexComponent, data: { title: '首页', module: 'index', power: "SHOW" } },
@@ -21,8 +21,8 @@ const routes: Routes = [
   { path: 'user', component: UserComponent, data: { title: '用户管理', module: 'user', power: "SHOW" } },
   { path: 'addUser', component: AddUserComponent, data: { title: '添加用户', module: 'user', power: "ADD" } },
   { path: 'addUser/:id', component: AddUserComponent, data: { title: '修改用户', module: 'user', power: "UPDATE" } },
-  { path: 'upUserPwd', component: UpUserPwdComponent, data: { title: '修改密码', module: 'user', power: "UPDATE" } },
-  { path: 'upUserInfo', component: UpUserInfoComponent, data: { title: '用户信息', module: 'user', power: "UPDATE" } },
+  { path: 'upUserPwd', component: UpUserPwdComponent, data: { title: '修改密码', module: 'allpower', power: "UPDATE" } },
+  { path: 'upUserInfo', component: UpUserInfoComponent, data: { title: '用户信息', module: 'allpower', power: "UPDATE" } },
 
   { path: 'role', component: RoleComponent, data: { title: '角色管理', module: 'role', power: "SHOW" } },
   { path: 'addRole', component: AddRoleComponent, data: { title: '添加角色', module: 'role', power: "ADD" } },
@@ -46,9 +46,9 @@ const routes: Routes = [
   { path: 'menu', component: MenuComponent, data: { title: '菜单管理', module: 'menu', power: "SHOW" } },
   { path: 'addMenu/:id/:type', component: AddMenuComponent, data: { title: '修改菜单', module: 'menu', power: "UPDATE" } },
 
-  { path: '**', component: NotFindPageComponent, data: { title: '404', data: { title: '404', module: 'notPower', power: "SHOW" } } },
-  { path: 'notPower', component: NotPowerComponent, data: { title: '404', data: { title: '404', module: 'notPower', power: "SHOW" } } },
-  
+  { path: '**', component: NotFindPageComponent, data: { title: '404', module: 'notPower', power: "SHOW" } },
+  { path: 'notPower', component: NotPowerComponent, data: { title: '404', module: 'notPower', power: "SHOW" } },
+
 ];
 
 

@@ -12,14 +12,12 @@ import 'rxjs/add/operator/mergeMap';
 })
 
 export class AdminComponent implements OnInit {
-    global: Global;
     constructor(
-        @Inject("global") global: Global,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private titleService: Title
     ) {
-        this.global = global;
+       
     }
 
     ngOnInit() {
@@ -34,7 +32,6 @@ export class AdminComponent implements OnInit {
             .mergeMap(route => route.data)
             .subscribe((event) => {
                 this.titleService.setTitle(event['title']);
-                this.global.urlTitle = event['title'];
             });
     }
 }

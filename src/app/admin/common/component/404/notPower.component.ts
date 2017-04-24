@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'admin-notPower',
-    template: ` 
-        <div class="app flex-row align-items-center">
+  selector: 'admin-notPower',
+  template: ` 
+         <div class="app flex-row align-items-center">
           <div class="container">
             <div class="row justify-content-center">
               <div class="col-md-6">
@@ -28,7 +28,7 @@ import { Component, OnInit } from '@angular/core';
 
 export class NotPowerComponent implements OnInit {
 
-    constructor() { }
+  constructor() { }
 
-    ngOnInit() { }
+  ngOnInit() { }
 }

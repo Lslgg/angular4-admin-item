@@ -12,17 +12,21 @@ export class SidebarComponent implements OnInit {
 
     navMenuList: Array<NavMenu>;
 
-    constructor(private layoutsService: LayoutsService) { }
+    rolePower: Array<{ menuId, title }>;
+
+    constructor(
+        private layoutsService: LayoutsService) {
+    }
 
     ngOnInit() {
         this.layoutsService.findAllMenu().then(list => {
             this.navMenuList = list;
             let navList = new Array<NavMenu>();
-            this.navMenuList=this.getTreeList("0", navList);
+            this.navMenuList = this.getTreeList("0", navList);
         });
     }
 
-    getTreeList(pid: string, navList: Array<NavMenu>):Array<NavMenu> {
+    getTreeList(pid: string, navList: Array<NavMenu>): Array<NavMenu> {
         if (pid == "0") {
             navList = this.navMenuList.filter(v => v.pid == pid);
             this.getTreeList("1", navList);
@@ -37,6 +41,6 @@ export class SidebarComponent implements OnInit {
         }
 
         return navList;
-        
+
     }
 }
