@@ -6,7 +6,8 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         "node_modules":true,
-        "e2e":true
+        "e2e":true,
+        "dist":true
     },
     "vsicons.presets.angular": true
 }

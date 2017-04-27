@@ -166,7 +166,8 @@ export class UserService {
         return userInfo;
     }
 
-    upUserPwd(id: string, username: string, password: string, newPassword): Promise<boolean> {
+    upUserPwd(id: string, username: string, 
+        password: string, newPassword): Promise<boolean> {
         let promise = new Promise<boolean>((resolve, reject) => {
             this.Parse.User.logIn(username, password, {
                 success: function (user) {
@@ -187,7 +188,8 @@ export class UserService {
         return promise;
     }
 
-    upUserInfo(id: string, email: string, phone: string, address: string): Promise<boolean> {
+    upUserInfo(id: string, email: string, 
+        phone: string, address: string): Promise<boolean> {
         let promise = new Promise<boolean>((resolve, reject) => {
             this.Parse.Cloud.run('updateUserInfo',
                 {

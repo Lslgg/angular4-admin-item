@@ -2,10 +2,14 @@
     <common-tableOperation [addurl]="Addurl" 
         (onSearch)="onSearch($event)" 
         (onDelete)="onDelete($event)"
-        (onAddInfo)="onAddInfo($event)"
-        plane-title></common-tableOperation>
+        (onAddInfo)="onAddInfo($event)" plane-title>
+    </common-tableOperation>
 
-    <common-table [tableInfo]="tableInfo" [listData]="listDataArrray" [pageCount]="pageCount" (ongetPageList)="ongetPageList($event)"
-        (onDelInfo)="ondelUser($event)" (onUpInfo)="onUpInfoUser($event)" (onAllchecked)="onAllchecked($event)" plane-body>
+    <common-table [tableInfo]="tableInfo" [listData]="listDataArrray" 
+            [pageCount]="pageCount" 
+            (ongetPageList)="ongetPageList($event)"
+            (onDelInfo)="ondelUser($event)" 
+            (onUpInfo)="onUpInfoUser($event)" 
+            (onAllchecked)="onAllchecked($event)" plane-body>
     </common-table>
 </template-panel-table>

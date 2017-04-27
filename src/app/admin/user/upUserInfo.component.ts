@@ -23,13 +23,14 @@ export class UpUserInfoComponent implements OnInit {
         this.user = new User();
         this.submitValue = "修改";
         let currentUser= this.userService.getCurrentUser();
-        this.userService.getUserInfo(currentUser.id).then(user=>this.user=user);
+        this.user=this.userService.getCurrentUser();
     }
 
     ngOnInit() { }
 
     onSubmit() {
-        this.userService.upUserInfo(this.user.id, this.user.email,this.user.phone,this.user.address)
+        this.userService.upUserInfo(this.user.id, this.user.email,
+                this.user.phone,this.user.address)
             .then(value => {
                 if (value) {
                     alert(value ? "修改成功！" : "修改失败！");
