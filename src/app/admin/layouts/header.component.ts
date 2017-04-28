@@ -5,6 +5,17 @@ import { LayoutsService } from './shared/layouts.service';
 @Component({
     selector: 'layouts-header',
     templateUrl: 'header.html',
+    styles:[`
+        header.navbar .navbar-brand2 {
+            display: inline-block;
+            width: 155px;
+            height: 55px;
+            line-height:55px;
+            text-align:center;
+            margin-right: 0;
+            text-decoration:none;
+        }
+    `],
     providers: [LayoutsService]
 
 })

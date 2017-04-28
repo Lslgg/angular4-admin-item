@@ -7,4 +7,5 @@ export class Menu{
     public url:string;
     public code:string;
     public isValid:boolean;
+    public colloction:string
 }
