@@ -36,15 +36,21 @@ export class AddPlayerComponent implements OnInit {
 
     onSubmit() {
         let currentUser = this.userService.getCurrentUser();
+        if(this.player.addCardNum<=0){
+            alert("房卡不能为负！");
+            return;
+        }
         if (currentUser.card < this.player.addCardNum) {
             alert("您的房卡不够不能修改用户房卡！");
+            return;
         } else {
             this.playerService.upInfo(this.player.id, this.player.addCardNum,this.player.name).then(isSuccess => {
                 alert(isSuccess ? "修改房卡成功！" : "修改房卡失败！");
                 this.router.navigate(['../admin/player']);
+                return ;
             }).catch(error => {
                 alert("修改房卡失败！");
-                console.log(error);
+                return ;
             })
         }
     }

@@ -69,6 +69,10 @@ export class PlayerService {
 
 	upInfo(id: string, card: number, username: string): Promise<Player> {
 		let promise = new Promise((resolve, reject) => {
+			if (card <= 0) {
+				resolve(false);
+				return;
+			}
 			let currentUserCard = (-(card));
 			let currentUser = this.Parse.User.current();
 			let currentId = currentUser.id;
