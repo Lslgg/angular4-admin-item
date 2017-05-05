@@ -14,7 +14,8 @@ export class PlayerService {
 	Parse: any;
 
 	constructor( @Inject("commonHttp") commonHttp: CommonHttp,
-		@Inject("parse") parse, private http: Http, private cardLogService: CardLogService) {
+		@Inject("parse") parse, private http: Http, 
+		private cardLogService: CardLogService) {
 		this.api = commonHttp;
 		this.Parse = parse.Parse;
 	}

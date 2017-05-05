@@ -6,7 +6,7 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         "node_modules":true,
-        "environments":true,
+        "src/environments":true,
         "e2e":true,
         "dist":true
     },

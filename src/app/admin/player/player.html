@@ -1,8 +1,11 @@
 <template-panel-table>
-    <common-tableOperation [addurl]="Addurl" [isAddHidden]="'hidden'" 
-        [isDelHidden]="'hidden'" (onSearch)="onSearch($event)"
-        plane-title>
-    </common-tableOperation>
+    <div style="padding-bottom:18px;" class="input-group" plane-title>
+        <input class="form-control" id="input1-group2" name="input1-group2" placeholder="search" type="text">
+        <span class="input-group-btn">
+                <button class="btn btn-primary" type="button" (click)="search()"><i class="fa fa-search"></i> 查找</button>
+            </span>
+    </div>
+
     <common-table [tableInfo]="tableInfo" [listData]="listDataArrray" [pageSize]="pageSize" [pageCount]="pageCount" (ongetPageList)="ongetPageList($event)"
         (onUpInfo)="onUpInfoUser($event)" (onAllchecked)="onAllchecked($event)" plane-body>
     </common-table>

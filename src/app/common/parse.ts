@@ -240,11 +240,13 @@ export class Parse implements ParserServer {
         return currentUser["id"];
     }
     
+    
     public setQuery(tableName: string): any {
         var table = this.Parse.Object.extend(tableName);
         var query = new this.Parse.Query(table);
         return query;
     }
+
 
     public setParseObj(tableName: string): any {
         var DBInfo = this.Parse.Object.extend(tableName);
