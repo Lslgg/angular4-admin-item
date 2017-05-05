@@ -19,28 +19,22 @@ interface ParserServer {
 
     delete(id: string, tableName: string): Promise<boolean>;
 
-    getInfo<T>(id: string, tablename: string): Promise<T>;
+    getInfo<T>(id: string, tablename: string | object, tClass?: { new (): T }): Promise<T>;
 
-    getInfo2<T>(id: string, tablename: string, tClass: { new (): T }): Promise<T>;
+    findPage<T>(pageIndex: number, pageSize: number, tableName: string | object, tClass?: { new (): T }): Promise<Array<T>>;
 
-    findPage<T>(pageIndex: number, pageSize: number, tableName: string): Promise<Array<T>>;
+    findCount(tableName: string | object): Promise<number>;
 
-    findPage2<T>(pageIndex: number, pageSize: number, tableName: string, tClass: { new (): T }): Promise<Array<T>>;
+    findWhere<T>(query: any, tClass?: { new (): T }): Promise<Array<T>>;
 
-    findCount(tableName: string): Promise<number>;
+    /** 
+    * 当前登录ID
+    */
+    getCurrentUserId(): string;
 
-    findWhere<T>(query: any): Promise<Array<T>>;
+    setQuery(tableName: string): any;
 
-    findWhere2<T>(query: any, tClass: { new (): T }): Promise<Array<T>>;
-
-     /** 
-     * 当前登录ID
-     */
-    getCurrentUserId():string;
-
-    setQuery(tableName:string):any;
-
-    setParseObj(tableName:string):any;
+    setParseObj(tableName: string): any;
 }
 
 

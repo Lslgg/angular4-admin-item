@@ -4,15 +4,15 @@ import { CardLog } from '../../common/module'
 @Injectable()
 export class CardLogService {
 
-    Parse: any;
+    parseParser: ParserServer;
 
-    constructor(@Inject("parse") parse) {
-        this.Parse = parse.Parse;
+    constructor(@Inject("parse") parse:ParserServer) {
+        this.parseParser = parse;
     }
 
     addInfo(cardLogInfo: CardLog): Promise<boolean> {
         let promise = new Promise<boolean>((resolve, reject) => {
-            var CardLog = this.Parse.Object.extend("CardLog");
+            var CardLog = this.parseParser.Parse.Object.extend("CardLog");
             let cardLog = new CardLog();
 
             cardLog.set("userId", cardLogInfo.userId);
@@ -37,42 +37,12 @@ export class CardLogService {
     }
 
     getCount(): Promise<number> {
-        var cardLog = this.Parse.Object.extend("CardLog");
-        var query = new this.Parse.Query(cardLog);
-        let promise = new Promise<number>((resolve, reject) => {
-            query.count({
-                success: (count: number) => { return resolve(count); },
-                error: (error) => { return reject(error) }
-            });
-        });
-
+        let promise =this.parseParser.findCount("CardLog");
         return promise;
     }
 
     getList(pageIndex: number, pageSize: number): Promise<Array<CardLog>> {
-        let cardLog = this.Parse.Object.extend("CardLog");
-        let query = new this.Parse.Query(cardLog);
-        query.skip((pageIndex - 1) * pageSize);
-        query.limit(pageSize);
-
-        let promise = new Promise<Array<CardLog>>((resolve, reject) => {
-            query.find({
-                success: (result: Array<CardLog>) => {
-                    let cardLogList: Array<CardLog> = new Array<CardLog>();
-                    for (let i = 0; i < result.length; i++) {
-                        let cardLog = new CardLog();
-                        let self = result[i];
-                        Object.assign(cardLog, self["attributes"]);
-                        cardLog.id = self['id'];
-                        cardLog.createAtFormt=cardLog.createdAt.toLocaleString()
-                        cardLogList[i] = cardLog;
-                    }
-                    resolve(cardLogList);
-                },
-                error: (error) => { console.log(error); reject(error) }
-            });
-        });
-
+        let promise = this.parseParser.findPage(pageIndex,pageSize,"CardLog");
         return promise;
     }
 

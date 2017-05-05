@@ -70,36 +70,21 @@ export class Parse implements ParserServer {
     /*
     * 根据ID查找
     */
-    public getInfo<T>(id: string, tableName: string): Promise<T> {
-        var table = this.Parse.Object.extend(tableName);
-        var query = new this.Parse.Query(table);
+    public getInfo<T>(id: string, tableName: string | object, tClass?: { new (): T }): Promise<T> {
+        var query: any;
+        if (typeof tableName == "string") {
+            let table = this.Parse.Object.extend(tableName);
+            query = new this.Parse.Query(table);
+        } else {
+            query = new this.Parse.Query(tableName);
+        }
         let promise = new Promise<any>((resolve, reject) => {
             query.get(id, {
                 success: (val) => {
                     let info: T = {} as T;
-                    Object.assign(info, val['attributes']);
-                    info["id"] = val["id"];
-                    resolve(info);
-                },
-                error: (error) => {
-                    reject(error);
-                }
-            });
-        });
-
-        return promise;
-    }
-
-    /*
-   * 根据ID查找
-   */
-    public getInfo2<T>(id: string, tableName: string, tClass: { new (): T }): Promise<T> {
-        var table = this.Parse.Object.extend(tableName);
-        var query = new this.Parse.Query(table);
-        let promise = new Promise<any>((resolve, reject) => {
-            query.get(id, {
-                success: (val) => {
-                    let info: T = new tClass();
+                    if (tClass != undefined) {
+                        info = new tClass();
+                    }
                     Object.assign(info, val['attributes']);
                     info["id"] = val["id"];
                     resolve(info);
@@ -116,9 +101,16 @@ export class Parse implements ParserServer {
     /*
     * 分页查找
     */
-    public findPage<T>(pageIndex: number, pageSize: number, tableName: string): Promise<T> {
-        let table = this.Parse.Object.extend(tableName);
-        let query = new this.Parse.Query(table);
+    public findPage<T>(pageIndex: number, pageSize: number,
+        tableName: string | object, tClass?: { new (): T }): Promise<T> {
+        var query: any;
+        if (typeof tableName == "string") {
+            let table = this.Parse.Object.extend(tableName);
+            query = new this.Parse.Query(table);
+        } else {
+            query = new this.Parse.Query(tableName);
+        }
+        query.descending('updatedAt');
         query.skip((pageIndex - 1) * pageSize);
         query.limit(pageSize);
         let promise = new Promise<any>((resolve, reject) => {
@@ -127,34 +119,9 @@ export class Parse implements ParserServer {
                     let list: Array<T> = new Array<T>();
                     for (let i = 0; i < result.length; i++) {
                         let info: T = {} as T;
-                        Object.assign(info, result[i]["attributes"]);
-                        info["id"] = result[i]['id'];
-                        list[i] = info;
-                    }
-
-                    resolve(list);
-                },
-                error: (error) => { console.log(error); reject(error) }
-            });
-        });
-
-        return promise;
-    }
-
-    /*
-    * 分页查找
-    */
-    public findPage2<T>(pageIndex: number, pageSize: number, tableName: string, tClass: { new (): T }): Promise<T> {
-        let table = this.Parse.Object.extend(tableName);
-        let query = new this.Parse.Query(table);
-        query.skip((pageIndex - 1) * pageSize);
-        query.limit(pageSize);
-        let promise = new Promise<any>((resolve, reject) => {
-            query.find({
-                success: (result: Array<any>) => {
-                    let list: Array<T> = new Array<T>();
-                    for (let i = 0; i < result.length; i++) {
-                        let info: T = new tClass();
+                        if (tClass != undefined) {
+                            info = new tClass();
+                        }
                         Object.assign(info, result[i]["attributes"]);
                         info["id"] = result[i]['id'];
                         list[i] = info;
@@ -172,9 +139,14 @@ export class Parse implements ParserServer {
     /*
     * 查找所有总数
     */
-    public findCount(tableName: string): Promise<number> {
-        var table = this.Parse.Object.extend(tableName);
-        var query = new this.Parse.Query(table);
+    public findCount(tableName: string | object): Promise<number> {
+        var query: any;
+        if (typeof tableName == "string") {
+            let table = this.Parse.Object.extend(tableName);
+            query = new this.Parse.Query(table);
+        } else {
+            query = new this.Parse.Query(tableName);
+        }
         let promise = new Promise<number>((resolve, reject) => {
             query.count({
                 success: (count: number) => { return resolve(count); },
@@ -188,13 +160,16 @@ export class Parse implements ParserServer {
     /*
     * 条件查找
     */
-    public findWhere<T>(query: any): Promise<Array<T>> {
+    public findWhere<T>(query: any, tClass?: { new (): T }): Promise<Array<T>> {
         let promise = new Promise<Array<T>>((resolve, reject) => {
             query.find({
                 success: (result: Array<T>) => {
                     let list: Array<T> = new Array<T>();
                     for (let i = 0; i < result.length; i++) {
                         var info: T = {} as T;
+                        if (tClass != undefined) {
+                            info = new tClass();
+                        }
                         Object.assign(info, result[i]["attributes"]);
                         info["id"] = result[i]['id'];
                         list[i] = info;
@@ -206,29 +181,6 @@ export class Parse implements ParserServer {
             });
         });
 
-        return promise;
-    }
-
-    /*
-    * 条件查找
-    */
-    public findWhere2<T>(query: any, tClass: { new (): T }): Promise<Array<T>> {
-        let promise = new Promise<Array<T>>((resolve, reject) => {
-            query.find({
-                success: (result: Array<T>) => {
-                    let list: Array<T> = new Array<T>();
-                    for (let i = 0; i < result.length; i++) {
-                        var info: T = new tClass();
-                        Object.assign(info, result[i]["attributes"]);
-                        info["id"] = result[i]['id'];
-                        list[i] = info;
-                    }
-
-                    resolve(list);
-                },
-                error: (error) => { console.log(error); reject(error) }
-            });
-        });
         return promise;
     }
 
@@ -239,8 +191,8 @@ export class Parse implements ParserServer {
         var currentUser = this.Parse.User.current();
         return currentUser["id"];
     }
-    
-    
+
+
     public setQuery(tableName: string): any {
         var table = this.Parse.Object.extend(tableName);
         var query = new this.Parse.Query(table);

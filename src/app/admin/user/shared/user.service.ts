@@ -5,99 +5,83 @@ import { CardLogService } from '../../cardLog/shared/cardLog.service';
 @Injectable()
 export class UserService {
 
-    Parse: any;
+    Parse: ParserServer;
 
-    constructor(@Inject("parse") parse,
+    constructor( @Inject("parse") parse: ParserServer,
         private cardLogService: CardLogService) {
-        this.Parse = parse.Parse;
+        this.Parse = parse;
     }
 
     addUser(user: User): Promise<boolean> {
-        //修改用户信息
-        if (user.id != undefined) {
-            let promise = new Promise<boolean>((resolve, reject) => {
-                this.Parse.Cloud.run('updateUser',
-                    {
-                        objectId: user.id,
-                        username: user.username,
-                        roleId: user.roleId,
-                        isValid: user.isValid
-                    }
-                ).then((result) => resolve(true));
+        let parseUser = this.setUser(user);
+        let promise = new Promise<boolean>((resolve, reject) => {
+            parseUser.save(null, {
+                success: (userInfo) => {
+                    this.getRoleInfo(user.roleId).then(val => {
+                        val.getUsers().add(userInfo);
+                        val.save();
+                        resolve(true);
+                    })
+                },
+                error: (user, error) => { reject(false); }
             });
+        });
+        return promise;
+    }
 
-            return promise;
-        } else { //添加新用户
-            let parseUser = this.setUser(user);
-            let promise = new Promise<boolean>((resolve, reject) => {
-                parseUser.signUp(null, {
-                    success: (user) => { resolve(true) },
-                    error: (user, error) => { reject(false); }
-                });
-            });
-            return promise;
-        }
+    updateUser(user: User, oldRoleId: string): Promise<boolean> {
+        let promise = new Promise<boolean>((resolve, reject) => {
+            this.Parse.Parse.Cloud.run('updateUser',
+                {
+                    objectId: user.id,
+                    username: user.username,
+                    roleId: user.roleId,
+                    isValid: user.isValid
+                }
+            ).then((result) => {
+                if (user.roleId == oldRoleId) {
+                    resolve(true);
+                } else {
+                    this.getUserInfo2(user.id).then(userInfo => {
+                        let roleId = userInfo["attributes"]["roleId"];
+                        this.getRoleInfo(roleId).then(val => {//添加新的角色
+                            val.getUsers().add(userInfo);
+                            val.save();
+                            this.getUserInfo2(user.id).then(odlUserInfo => {//删除旧的角色
+                                this.getRoleInfo(oldRoleId).then(oldVal => {
+                                    oldVal.getUsers().remove(odlUserInfo);
+                                    oldVal.save();
+                                    resolve(true);
+                                })
+                            })
+                        })
+                    });
+                }
+
+            })
+        });
+
+        return promise;
     }
 
     getUserList(pageIndex: number, pageSize: number): Promise<Array<User>> {
-        var query = new this.Parse.Query(this.Parse.User);
-        query.descending('updatedAt');
-        query.skip((pageIndex - 1) * pageSize);
-        query.limit(pageSize);
-
-        let promise = new Promise<Array<User>>((resolve, reject) => {
-            query.find({
-                success: (result: Array<User>) => {
-                    let userList: Array<User> = new Array<User>();
-                    for (let i = 0; i < result.length; i++) {
-                        let user = new User();
-                        Object.assign(user, result[i]["attributes"]);
-                        user.id = result[i]['id'];
-                        userList[i] = user;
-                    }
-                    resolve(userList);
-                },
-                error: (error) => { reject(error) }
-            });
-        });
-
+        let promise = this.Parse.findPage<User>(pageIndex, pageSize, this.Parse.Parse.User);
         return promise;
     }
 
     getUserCount(): Promise<number> {
-        var query = new this.Parse.Query(this.Parse.User);
-
-        let promise = new Promise<number>((resolve, reject) => {
-
-            query.count({
-                success: (count: number) => { return resolve(count); },
-                error: (error) => { return reject(error) }
-            });
-        });
-
+        let promise = this.Parse.findCount(this.Parse.Parse.User);
         return promise;
     }
 
     getUserInfo(id: string): Promise<User> {
-        var query = new this.Parse.Query(this.Parse.User);
-        query.equalTo('objectId', id);
-        let promise = new Promise<User>((resolve, reject) => {
-            query.find({
-                success: (user: User) => {
-                    let userInfo = new User();
-                    Object.assign(userInfo, user[0]['attributes']);
-                    userInfo.id = user[0]['id'];
-                    resolve(userInfo);
-                },
-                error: (error) => { reject(null) }
-            })
-        });
+        let promise = this.Parse.getInfo<User>(id, this.Parse.Parse.User);
         return promise;
     }
 
     delUser(id: string): Promise<boolean> {
         let promise = new Promise<boolean>((resolve, reject) => {
-            this.Parse.Cloud.run('deleteUser', { objectId: id }).then(
+            this.Parse.Parse.Cloud.run('deleteUser', { objectId: id }).then(
                 (result) => { resolve(result); }
             );
         });
@@ -108,12 +92,12 @@ export class UserService {
 
         let promise = new Promise<boolean>((resolve, reject) => {
             let currentUserCard = (-(card));
-            let currentUser = this.Parse.User.current();
+            let currentUser = this.Parse.Parse.User.current();
             let currentId = currentUser.id;
             let currentUserName = currentUser.get("username");
 
             //修改用户的房卡
-            this.Parse.Cloud.run('updateUserCard', { objectId: id, card: card }).then(
+            this.Parse.Parse.Cloud.run('updateUserCard', { objectId: id, card: card }).then(
                 (result) => { resolve(result); }
             );
 
@@ -121,7 +105,7 @@ export class UserService {
             if (username == "admin") {
                 resolve(true);
             } else {
-                this.Parse.Cloud.run('updateUserCard', { objectId: currentId, card: currentUserCard })
+                this.Parse.Parse.Cloud.run('updateUserCard', { objectId: currentId, card: currentUserCard })
                     .then((result) => { resolve(result); });
             }
 
@@ -159,17 +143,17 @@ export class UserService {
     }
 
     getCurrentUser(): User {
-        var currentUser = this.Parse.User.current();
+        var currentUser = this.Parse.Parse.User.current();
         let userInfo = new User();
         Object.assign(userInfo, currentUser['attributes']);
         userInfo.id = currentUser.id;
         return userInfo;
     }
 
-    upUserPwd(id: string, username: string, 
+    upUserPwd(id: string, username: string,
         password: string, newPassword): Promise<boolean> {
         let promise = new Promise<boolean>((resolve, reject) => {
-            this.Parse.User.logIn(username, password, {
+            this.Parse.Parse.User.logIn(username, password, {
                 success: function (user) {
                     resolve(true);
                 },
@@ -188,10 +172,10 @@ export class UserService {
         return promise;
     }
 
-    upUserInfo(id: string, email: string, 
+    upUserInfo(id: string, email: string,
         phone: string, address: string): Promise<boolean> {
         let promise = new Promise<boolean>((resolve, reject) => {
-            this.Parse.Cloud.run('updateUserInfo',
+            this.Parse.Parse.Cloud.run('updateUserInfo',
                 {
                     objectId: id,
                     email: email,
@@ -204,9 +188,44 @@ export class UserService {
         return promise;
     }
 
+    /**
+    * 查找返回原数据库对象
+    */
+    getRoleInfo(id: string): Promise<any> {
+        let promise = new Promise<any>((resolve, reject) => {
+            var query = new this.Parse.Parse.Query(this.Parse.Parse.Role);
+            query.equalTo('objectId', id);
+            query.get(id, {
+                success: (roule: any) => {
+                    resolve(roule);
+                },
+                error: (error) => {
+                    reject(false);
+                }
+            })
+        });
+        return promise;
+    }
+
+    /**
+     * 查找返回原数据库对象
+     */
+    getUserInfo2(id: string): Promise<User> {
+        var query = new this.Parse.Parse.Query(this.Parse.Parse.User);
+        let promise = new Promise<User>((resolve, reject) => {
+            query.get(id, {
+                success: (user: User) => {
+                    resolve(user);
+                },
+                error: (error) => { reject(null) }
+            })
+        });
+        return promise;
+    }
+
     private upPwd(id: string, password: string): Promise<boolean> {
         let promise = new Promise<boolean>((resolve, reject) => {
-            this.Parse.Cloud.run('updateUserPwd', { objectId: id, password: password }).then(
+            this.Parse.Parse.Cloud.run('updateUserPwd', { objectId: id, password: password }).then(
                 (result) => { resolve(true); }
             );
         });
@@ -214,7 +233,7 @@ export class UserService {
     }
 
     private setUser(userInfo: User) {
-        var user = new this.Parse.User();
+        var user = new this.Parse.Parse.User();
         user.set("id", userInfo.id);
         user.set("username", userInfo.username);
         user.set("password", userInfo.passWord);

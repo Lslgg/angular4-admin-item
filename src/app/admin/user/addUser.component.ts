@@ -22,6 +22,8 @@ export class AddUserComponent implements OnInit {
 
     roleList: Array<{ id: string, name: string, roleName: string }>;
 
+    oldRoleId:string;
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -40,6 +42,7 @@ export class AddUserComponent implements OnInit {
                 this.user = user;
                 this.user.passWord = "123456";
                 this.user.confirmpassword = "123456";
+                this.oldRoleId=this.user.roleId;
             });
         }
 
@@ -59,8 +62,9 @@ export class AddUserComponent implements OnInit {
     }
 
     onSubmit() {
-        let currentUser = this.userService.getCurrentUser();
-        let user = this.userService.addUser(this.user);
+        let user = this.user.id == undefined ? this.userService.addUser(this.user) :
+            this.userService.updateUser(this.user,this.oldRoleId);
+
         user.then((value) => {
             alert(this.user.id != undefined ? "修改用户成功！" : "添加用户成功！");
             this.router.navigate(['admin/user']);

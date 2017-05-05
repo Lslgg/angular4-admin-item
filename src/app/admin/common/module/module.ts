@@ -5,6 +5,7 @@ export class User{
     public oldpassWord:string;
     public confirmpassword:string;
     public roleId:string;
+    public roleName:string="角色名称";
     public card:Number;
     public addCard:Number;
     public email:string;

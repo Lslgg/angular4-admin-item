@@ -48,6 +48,9 @@ export class CardLogComponent implements OnInit {
 
         this.cardLogService.getList(1, this.pageSize).then((cardLogs) => {
             this.listDataArrray = cardLogs;
+            this.listDataArrray.forEach(val=>{
+                val.createAtFormt=val.createdAt.toLocaleString();
+            })
         }).catch(error=>{
             console.log(error);
         });

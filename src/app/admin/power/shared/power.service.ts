@@ -45,7 +45,7 @@ export class PowerService {
         let table = this.Parse.Parse.Object.extend("Menu");
         let query = new this.Parse.Parse.Query(table);
         query.equalTo("isLeaf", true);
-        let promise = this.Parse.findWhere2<NavMenu>(query, NavMenu);
+        let promise = this.Parse.findWhere<NavMenu>(query, NavMenu);
         return promise;
     }
 
@@ -53,14 +53,14 @@ export class PowerService {
         let table = this.Parse.Parse.Object.extend("RolePower");
         let query = new this.Parse.Parse.Query(table);
         query.equalTo("roleId", roleId);
-        let promise = this.Parse.findWhere2<RolePower>(query, RolePower);
+        let promise = this.Parse.findWhere<RolePower>(query, RolePower);
         return promise;
     }
 
     getPowerList(): Promise<Array<Power>> {
         let table = this.Parse.Parse.Object.extend(this.tableName);
         let query = new this.Parse.Parse.Query(table);
-        let promise = this.Parse.findWhere2<Power>(query,Power);
+        let promise = this.Parse.findWhere<Power>(query,Power);
         return promise;
     }
 
