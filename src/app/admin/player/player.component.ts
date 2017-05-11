@@ -37,6 +37,7 @@ export class PlayerComponent implements OnInit {
 
         let rowtitle: Array<[string, string]> = [
             ["#", "index"],
+            ["id","id"],
             ["用户名", "name"],
             ["房卡", "cardNum"],
             ["操作", "operation"]
