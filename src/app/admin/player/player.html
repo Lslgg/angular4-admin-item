@@ -1,12 +1,14 @@
 <template-panel-table>
     <div style="padding-bottom:18px;" class="input-group" plane-title>
-        <input class="form-control" id="input1-group2" name="input1-group2" placeholder="search" type="text">
+        <input class="form-control" id="input1-group2" name="input1-group2" 
+            placeholder="search" type="text" #search>
         <span class="input-group-btn">
-                <button class="btn btn-primary" type="button" (click)="search()"><i class="fa fa-search"></i> 查找</button>
+                <button class="btn btn-primary" type="button" (click)="onSearch(search.value)"><i class="fa fa-search"></i> 查找</button>
             </span>
     </div>
 
-    <common-table [tableInfo]="tableInfo" [listData]="listDataArrray" [pageSize]="pageSize" [pageCount]="pageCount" (ongetPageList)="ongetPageList($event)"
+    <common-table [tableInfo]="tableInfo" [listData]="listDataArrray" 
+        [pageSize]="pageSize" [pageCount]="pageCount" (ongetPageList)="ongetPageList($event)"
         (onUpInfo)="onUpInfoUser($event)" (onAllchecked)="onAllchecked($event)" plane-body>
     </common-table>
 </template-panel-table>

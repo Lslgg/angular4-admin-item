@@ -41,7 +41,7 @@ export class PlayerService {
 		return promise;
 	}
 
-	getCount(): Promise<number> {
+	getCount(id:string=""): Promise<number> {
 		let promise = new Promise((resole, reject) => {
 			this.Parse.Cloud.run(this.api.GMAPI,
 				{ pathname: this.api.USER_TOTAL, query: "" })
@@ -49,7 +49,6 @@ export class PlayerService {
 					let info = JSON.parse(result);
 					if (info.error_code != 0) resole(false);
 					resole(info.result.num);
-
 				})
 		})
 		return promise;
@@ -62,7 +61,9 @@ export class PlayerService {
 				.then(result => {
 					let info = JSON.parse(result);
 					if (info.error_code != 0) resole(false);
-					resole(info.result);
+					var player=new Player();
+					Object.assign(player, info.result);
+					resole(player);
 				})
 		});
 		return promise;

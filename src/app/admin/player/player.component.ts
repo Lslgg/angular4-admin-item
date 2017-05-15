@@ -76,12 +76,10 @@ export class PlayerComponent implements OnInit {
     }
 
     //查找
-    onSearch() {
-        console.log("onSearch");
-    }
-
-    //选择删除
-    onDelete() {
-        console.log('onDelete');
+    onSearch(id:string) {
+        this.playerService.getInfo(id).then(val=>{
+            this.listDataArrray=[];
+            this.listDataArrray.push(val);
+        });
     }
 }
