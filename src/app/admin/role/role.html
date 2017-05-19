@@ -1,10 +1,4 @@
 <template-panel-table>
-    <common-tableOperation [addurl]="Addurl" 
-        (onSearch)="onSearch($event)" 
-        (onDelete)="onDelete($event)" 
-        (onAddInfo)="onAddInfo($event)"
-        plane-title></common-tableOperation>
-
     <common-table [tableInfo]="tableInfo" [listData]="listDataArrray" [pageCount]="pageCount" (ongetPageList)="ongetPageList($event)"
         (onDelInfo)="ondelInfo($event)" (onUpInfo)="onUpInfo($event)" (onAllchecked)="onAllchecked($event)" plane-body>
     </common-table>

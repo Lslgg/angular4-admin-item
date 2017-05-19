@@ -71,7 +71,7 @@ export class CardComponent implements OnInit {
     }
 
     //查找
-    onSearch() {
+    search() {
         console.log("onSearch");
     }
 }

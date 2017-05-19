@@ -7,9 +7,9 @@ export class MenuService {
 
     Parse: ParserServer;
 
-    tableName: string = "Menu"
+    tableName: string = "Menu";
 
-    constructor(@Inject("parse") parse: ParserServer) {
+    constructor(@Inject("parse") parse) {
         this.Parse = parse;
         
     }

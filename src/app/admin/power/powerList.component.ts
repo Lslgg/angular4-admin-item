@@ -93,7 +93,7 @@ export class PowerListComponent implements OnInit {
 
     }
 
-    onSaveFunPower(power: Power) {
+    onSaveFunPower() {
         this.powerService.saveInfo([this.nowPower]).then(success => alert(success ? "成功！" : "失败！"));
     }
 

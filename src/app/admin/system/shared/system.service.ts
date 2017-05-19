@@ -13,7 +13,7 @@ export class SystemService {
 
 	Parse: any;
 
-	constructor( @Inject("commonHttp") commonHttp: CommonHttp, @Inject("parse") parse) {
+	constructor(@Inject("commonHttp") commonHttp: CommonHttp, @Inject("parse") parse) {
 		this.api = commonHttp;
 		this.Parse = parse.Parse;
 	}

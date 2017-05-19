@@ -3,7 +3,7 @@ import { Injectable, Inject } from '@angular/core';
 @Injectable()
 export class LoginService {
     Parse: any;
-    constructor( @Inject("parse") parse) {
+    constructor(@Inject("parse") parse) {
         this.Parse = parse.Parse;
     }
 

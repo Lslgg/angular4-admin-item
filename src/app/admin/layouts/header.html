@@ -11,22 +11,24 @@
       <a class="nav-link"  href="javascript:;" routerLinkActive="active" [routerLink]="['/admin/index']">首页</a>
     </li>
     <li class="nav-item px-1">
-      <a class="nav-link"  href="javascript:;" routerLinkActive="active" [routerLink]="['/admin/user']">用户</a>
+      <a class="nav-link"  href="javascript:;" routerLinkActive="active" [routerLink]="['/admin/player']">充值</a>
     </li>
     <li class="nav-item px-1">
-      <a class="nav-link" href="javascript:;" routerLinkActive="active" [routerLink]="['/admin/system']">设置</a>
+      <a class="nav-link" href="javascript:;" routerLinkActive="active" [routerLink]="['/admin/card']">代理</a>
     </li>
   </ul>
 
   <ul class="nav navbar-nav ml-auto">
     <li class="nav-item hidden-md-down">
-      <a class="nav-link" href="#"><i class="icon-bell"></i><span class="badge badge-pill badge-danger">5</span></a>
+      <a class="nav-link" href="javascript:#;">
+        <i class="icon-bell"></i><span class="badge badge-pill badge-danger">{{card}}</span>
+      </a>
     </li>
     <li class="nav-item hidden-md-down">
-      <a class="nav-link" href="#"><i class="icon-list"></i></a>
+      <a class="nav-link" href="javascript:#;"><i class="icon-list"></i></a>
     </li>
     <li class="nav-item hidden-md-down">
-      <a class="nav-link" href="#"><i class="icon-location-pin"></i></a>
+      <a class="nav-link" href="javascript:#;"><i class="icon-location-pin"></i></a>
     </li>
     <li class="nav-item dropdown" dropdown>
       <a class="nav-link dropdown-toggle" dropdownToggle>

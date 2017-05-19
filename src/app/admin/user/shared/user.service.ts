@@ -7,7 +7,7 @@ export class UserService {
 
     Parse: ParserServer;
 
-    constructor( @Inject("parse") parse: ParserServer,
+    constructor(@Inject("parse") parse,
         private cardLogService: CardLogService) {
         this.Parse = parse;
     }

@@ -7,7 +7,7 @@ export class LayoutsService {
 
     tableName: string = "Menu"
 
-    constructor( @Inject("parse") parse: ParserServer) {
+    constructor( @Inject("parse") parse) {
         this.parseServer = parse;
     }
 
@@ -69,9 +69,10 @@ export class LayoutsService {
         return newMenuList;
     }
 
-    public getCurrentUserName():string{
+    public getCurrentUserInfo():{name:string,card:number}{
         var currentUser = this.parseServer.Parse.User.current();
         let name = currentUser.get("username");
-        return name;
+        let card = currentUser.get("card");
+        return {name,card};
     }
 }

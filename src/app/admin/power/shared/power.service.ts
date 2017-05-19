@@ -8,7 +8,7 @@ export class PowerService {
 
     tableName: string = "power"
 
-    constructor(@Inject("parse") parse: ParserServer) {
+    constructor(@Inject("parse") parse) {
         this.Parse = parse;
     }
 

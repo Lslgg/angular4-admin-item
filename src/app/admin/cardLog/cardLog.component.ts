@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { Table, Row, OperationType } from '../common/component/table/index'
 
-import { User,CardLog } from '../common/';
+import { User, CardLog } from '../common/';
 import { CardLogService } from './shared/cardLog.service';
 
 
@@ -48,10 +48,10 @@ export class CardLogComponent implements OnInit {
 
         this.cardLogService.getList(1, this.pageSize).then((cardLogs) => {
             this.listDataArrray = cardLogs;
-            this.listDataArrray.forEach(val=>{
-                val.createAtFormt=val.createdAt.toLocaleString();
+            this.listDataArrray.forEach(val => {
+                val.createAtFormt = val.createdAt.toLocaleString();
             })
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error);
         });
     }
@@ -62,11 +62,16 @@ export class CardLogComponent implements OnInit {
 
     ongetPageList(index) {
         let userList = this.cardLogService.getList(index, this.pageSize)
-            .then((users) => { this.listDataArrray = users; });
+            .then((carsLog) => {
+            this.listDataArrray = carsLog;
+                this.listDataArrray.forEach(val => {
+                    val.createAtFormt = val.createdAt.toLocaleString();
+                })
+            });
     }
 
     ondelUser(id: string) {
-       
+
     }
 
     onUpInfoUser(id: string) {

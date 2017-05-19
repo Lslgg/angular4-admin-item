@@ -12,7 +12,7 @@ import { MenuService } from '../shared/menu.service';
                 <p menuhover>
                     <i class="fa fa-folder-open" id="0" menuroot></i> 根目录
                     <span>
-                       <i class="fa fa-plus mouse" title="添加" (click)="addMenu(0)"></i>
+                       <i class="fa fa-plus mouse" title="添加" (click)="addMenu('0')"></i>
                     </span>
                 </p>
             </li>

@@ -26,6 +26,8 @@ export class HeaderComponent implements OnInit {
 
     userName:string;
 
+    card:number;
+
     public toggled(open: boolean): void {
 
     }
@@ -38,10 +40,12 @@ export class HeaderComponent implements OnInit {
 
     Parse: any;
 
-    constructor( @Inject("parse") parse, private router: Router,
+    constructor(@Inject("parse") parse, private router: Router,
         private layoutsService:LayoutsService) {
         this.Parse = parse.Parse;
-        this.userName=this.layoutsService.getCurrentUserName();
+        let user=this.layoutsService.getCurrentUserInfo();
+        this.userName=user.name;
+        this.card=user.card;
         if(this.userName==""){
             alert("请登录！");
             this.router.navigate(['login']);

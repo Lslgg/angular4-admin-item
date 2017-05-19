@@ -6,7 +6,7 @@ export class CardLogService {
 
     parseParser: ParserServer;
 
-    constructor(@Inject("parse") parse:ParserServer) {
+    constructor(@Inject("parse") parse) {
         this.parseParser = parse;
     }
 

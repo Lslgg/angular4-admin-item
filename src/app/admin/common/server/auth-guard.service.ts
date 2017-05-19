@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
     parseServer: ParserServer;
 
-    constructor(@Inject("parse") parse: ParserServer,
+    constructor(@Inject("parse") parse,
         private router: Router) {
         this.parseServer = parse;
     }
