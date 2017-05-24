@@ -39,7 +39,7 @@ export class CardComponent implements OnInit {
         ];
 
         let operation: Array<OperationType> = [
-            OperationType.UPDATE
+            OperationType.RECHARGE
         ];
 
         let tableRow = new Row(rowtitle, operation);

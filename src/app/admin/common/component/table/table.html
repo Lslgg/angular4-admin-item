@@ -36,6 +36,9 @@
 								<ng-container *ngSwitchCase="'显示'">
 									<a href="javascript:void(0)">显示</a>
 								</ng-container>
+								<ng-container *ngSwitchCase="'充值'">
+									<a href="javascript:void(0)" (click)="upInfo(table_data[key])">充值</a>
+								</ng-container>
 							</ng-container>
 						</ng-container>
 					</ng-container>

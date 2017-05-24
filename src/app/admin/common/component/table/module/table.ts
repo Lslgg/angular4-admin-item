@@ -20,5 +20,6 @@ export enum OperationType{
     UPDATE,
     DELETE,
     SHOW,
-    DISABLED
+    DISABLED,
+    RECHARGE,
 }

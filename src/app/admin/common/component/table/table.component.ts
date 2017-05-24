@@ -66,6 +66,8 @@ export class TableComponent implements OnInit {
 				showOperation.push("修改");
 			} else if (value == OperationType.SHOW) {
 				showOperation.push("显示");
+			}else if (value == OperationType.RECHARGE) {
+				showOperation.push("充值");
 			}
 		});
 
