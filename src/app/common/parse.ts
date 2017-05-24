@@ -70,7 +70,7 @@ export class Parse implements ParserServer {
     /*
     * 根据ID查找
     */
-    public getInfo<T>(id: string, tableName: string | object, tClass?: { new (): T }): Promise<T> {
+    public getInfo<T>(id: string, tableName: string | {}, tClass?: { new (): T }): Promise<T> {
         var query: any;
         if (typeof tableName == "string") {
             let table = this.Parse.Object.extend(tableName);
@@ -102,7 +102,7 @@ export class Parse implements ParserServer {
     * 分页查找
     */
     public findPage<T>(pageIndex: number, pageSize: number,
-        tableName: string | object, tClass?: { new (): T }): Promise<T> {
+        tableName: string | {}, tClass?: { new (): T }): Promise<T> {
         var query: any;
         if (typeof tableName == "string") {
             let table = this.Parse.Object.extend(tableName);
@@ -139,7 +139,7 @@ export class Parse implements ParserServer {
     /*
     * 查找所有总数
     */
-    public findCount(tableName: string | object): Promise<number> {
+    public findCount(tableName: string | {}): Promise<number> {
         var query: any;
         if (typeof tableName == "string") {
             let table = this.Parse.Object.extend(tableName);

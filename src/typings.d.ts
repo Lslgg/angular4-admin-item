@@ -19,11 +19,11 @@ interface ParserServer {
 
     delete(id: string, tableName: string): Promise<boolean>;
 
-    getInfo<T>(id: string, tablename: string | object, tClass?: { new (): T }): Promise<T>;
+    getInfo<T>(id: string, tablename: string | {}, tClass?: { new (): T }): Promise<T>;
 
-    findPage<T>(pageIndex: number, pageSize: number, tableName: string | object, tClass?: { new (): T }): Promise<Array<T>>;
+    findPage<T>(pageIndex: number, pageSize: number, tableName: string | {}, tClass?: { new (): T }): Promise<Array<T>>;
 
-    findCount(tableName: string | object): Promise<number>;
+    findCount(tableName: string | {}): Promise<number>;
 
     findWhere<T>(query: any, tClass?: { new (): T }): Promise<Array<T>>;
 
