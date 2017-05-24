@@ -31,6 +31,8 @@ export class PlayerService {
 					for (var i = 0; i < info.result.data.length; i++) {
 						let player = new Player();
 						Object.assign(player, info.result.data[i]);
+						player.name=player.name.length>10?
+							player.name.substring(0,10)+"...":player.name;
 						playList[i] = player;
 					}
 
