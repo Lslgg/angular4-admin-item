@@ -5,7 +5,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
     templateUrl: 'pagiation.html'
 })
 
-export class PagiationComponent {
+export class PagiationComponent2 implements OnInit {
 
     @Input() pageCount: Promise<number>;
     
@@ -19,7 +19,14 @@ export class PagiationComponent {
 
     LastPage: number = 0; //最后一页
 
-    constructor() { } 
+    constructor() { }
+
+    ngOnInit() {
+        this.getPageCount().then((last) => {
+            this.LastPage = last;
+            this.setPageInfo(1);
+        });
+    }
 
     //下一页
     getPage(index) {
@@ -78,12 +85,5 @@ export class PagiationComponent {
             }
         });
 
-    }
-
-    ngOnChanges(){
-        this.getPageCount().then((last) => {
-            this.LastPage = last;
-            this.setPageInfo(1);
-        }); 
     }
 }

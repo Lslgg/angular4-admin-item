@@ -77,6 +77,7 @@ export class PlayerComponent implements OnInit {
 
     //查找
     onSearch(id:string) {
+        this.pageCount = this.playerService.getCount();
         this.playerService.getInfo(id).then(val=>{
             this.listDataArrray=[];
             this.listDataArrray.push(val);

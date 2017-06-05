@@ -103,6 +103,7 @@ export class Parse implements ParserServer {
     */
     public findPage<T>(pageIndex: number, pageSize: number,
         tableName: string | {}, tClass?: { new (): T }): Promise<T> {
+            
         var query: any;
         if (typeof tableName == "string") {
             let table = this.Parse.Object.extend(tableName);

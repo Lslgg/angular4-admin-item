@@ -31,6 +31,7 @@ export class CardLog{
     public updateAt:Date;
     public createdAt:Date;
     public createAtFormt:string;
+    public userType:string;
 }
 
 export class Role{

@@ -73,10 +73,7 @@ export class PlayerService {
 
 	upInfo(id: string, card: number, username: string): Promise<Player> {
 		let promise = new Promise((resolve, reject) => {
-			if (card <= 0) {
-				resolve(false);
-				return;
-			}
+			if (card <= 0) { resolve(false); return; }
 			let currentUserCard = (-(card));
 			let currentUser = this.Parse.User.current();
 			let currentId = currentUser.id;
@@ -97,6 +94,7 @@ export class PlayerService {
 			carLog.card = card;
 			carLog.userId = currentId;
 			carLog.userName = currentUserName;
+			//carLog.userType="管理员";
 			carLog.targetId = id.toString();
 			carLog.targetName = username;
 			carLog.type = card >= 0 ? "添房卡" : "减房卡";
@@ -110,6 +108,7 @@ export class PlayerService {
 			selfcarLog.card = currentUserCard;
 			selfcarLog.userId = currentId;
 			selfcarLog.userName = currentUserName;
+			//carLog.userType="代理";			
 			selfcarLog.targetId = currentId;
 			selfcarLog.targetName = currentUserName;
 			selfcarLog.type = currentUserCard >= 0 ? "添房卡" : "减房卡";

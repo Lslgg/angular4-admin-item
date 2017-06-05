@@ -5,10 +5,21 @@ import { Table, Row, OperationType } from '../common/component/table/index'
 
 import { User, CardLog } from '../common/';
 import { CardLogService } from './shared/cardLog.service';
-
+import { CardLogSearch } from './shared/cardLogSearch';
 
 @Component({
     selector: 'admin-cardLog',
+    styles: [`
+        .form-control-label{
+            margin-bottom:0px; 
+            padding-right:12px; 
+            line-height:32px
+        }
+        .form-control{
+            flex-direction:row; 
+        }
+        `
+    ],
     templateUrl: 'cardLog.html',
     providers: [CardLogService]
 })
@@ -16,6 +27,8 @@ import { CardLogService } from './shared/cardLog.service';
 export class CardLogComponent implements OnInit {
 
     tableInfo: Table;
+
+    cardLogSearch: CardLogSearch = new CardLogSearch();
 
     listDataArrray: Array<CardLog> = null;
 
@@ -25,13 +38,14 @@ export class CardLogComponent implements OnInit {
 
     pageCount: Promise<number>;
 
-    roleList: Array<{ name: string, roleName: string }>;
-
     constructor(private router: Router,
         private cardLogService: CardLogService) {
 
+        this.getList();
+    }
+
+    getList() {
         let rowtitle: Array<[string, string]> = [
-            ["#", "index"],
             ["用户名", "userName"],
             ["类型", "type"],
             ["目标用户", "targetName"],
@@ -44,9 +58,9 @@ export class CardLogComponent implements OnInit {
         let tableRow = new Row(rowtitle, operation);
         this.tableInfo = new Table(tableRow);
 
-        this.pageCount = this.cardLogService.getCount();
+        this.pageCount = this.cardLogService.getCount(this.cardLogSearch);
 
-        this.cardLogService.getList(1, this.pageSize).then((cardLogs) => {
+        this.cardLogService.getList(1, this.pageSize, this.cardLogSearch).then((cardLogs) => {
             this.listDataArrray = cardLogs;
             this.listDataArrray.forEach(val => {
                 val.createAtFormt = val.createdAt.toLocaleString();
@@ -61,35 +75,25 @@ export class CardLogComponent implements OnInit {
     }
 
     ongetPageList(index) {
-        let userList = this.cardLogService.getList(index, this.pageSize)
+        let userList = this.cardLogService.getList(index, this.pageSize, this.cardLogSearch)
             .then((carsLog) => {
-            this.listDataArrray = carsLog;
+                this.listDataArrray = carsLog;
                 this.listDataArrray.forEach(val => {
                     val.createAtFormt = val.createdAt.toLocaleString();
                 })
             });
     }
 
-    ondelUser(id: string) {
+    search() {
+        this.pageCount = this.cardLogService.getCount(this.cardLogSearch);
 
-    }
-
-    onUpInfoUser(id: string) {
-        this.router.navigate(['../admin/addUser', id]);
-    }
-
-    //全选
-    onAllchecked(checkbox: boolean) {
-
-    }
-
-    //查找
-    onSearch() {
-        console.log("onSearch");
-    }
-
-    //选择删除
-    onDelete() {
-        console.log('onDelete');
+        this.cardLogService.getList(1, this.pageSize, this.cardLogSearch).then((cardLogs) => {
+            this.listDataArrray = cardLogs;
+            this.listDataArrray.forEach(val => {
+                val.createAtFormt = val.createdAt.toLocaleString();
+            })
+        }).catch(error => {
+            console.log(error);
+        });
     }
 }
