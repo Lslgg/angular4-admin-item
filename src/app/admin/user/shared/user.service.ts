@@ -7,7 +7,7 @@ export class UserService {
 
     Parse: ParserServer;
 
-    constructor(@Inject("parse") parse,
+    constructor( @Inject("parse") parse,
         private cardLogService: CardLogService) {
         this.Parse = parse;
     }
@@ -113,6 +113,7 @@ export class UserService {
             carLog.card = card;
             carLog.userId = currentId;
             carLog.userName = currentUserName;
+            carLog.userType = username == "admin"?0:1;
             carLog.targetId = id;
             carLog.targetName = username;
             carLog.type = card >= 0 ? "添房卡" : "减房卡";
@@ -130,6 +131,7 @@ export class UserService {
                 selfcarLog.userId = currentId;
                 selfcarLog.userName = currentUserName;
                 selfcarLog.targetId = currentId;
+                selfcarLog.userType = username == "admin"?0:1;
                 selfcarLog.targetName = currentUserName;
                 selfcarLog.type = currentUserCard >= 0 ? "添房卡" : "减房卡";
                 selfcarLog.desc = currentUserName + "给" + currentUserName + selfcarLog.type + card + "张";

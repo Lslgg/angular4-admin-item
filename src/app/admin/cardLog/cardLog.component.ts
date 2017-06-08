@@ -38,13 +38,18 @@ export class CardLogComponent implements OnInit {
 
     pageCount: Promise<number>;
 
+    recordCount: number = 1;
+
+    cardCount: number = 0;
+
     constructor(private router: Router,
         private cardLogService: CardLogService) {
 
-        this.getList();
+        this.getinitTable();
+        this.getList(1);
     }
 
-    getList() {
+    getinitTable() {
         let rowtitle: Array<[string, string]> = [
             ["用户名", "userName"],
             ["类型", "type"],
@@ -57,10 +62,14 @@ export class CardLogComponent implements OnInit {
 
         let tableRow = new Row(rowtitle, operation);
         this.tableInfo = new Table(tableRow);
+    }
 
+    getList(index) {
         this.pageCount = this.cardLogService.getCount(this.cardLogSearch);
 
-        this.cardLogService.getList(1, this.pageSize, this.cardLogSearch).then((cardLogs) => {
+        this.pageCount.then(count => this.recordCount = count);
+
+        this.cardLogService.getList(index, this.pageSize, this.cardLogSearch).then((cardLogs) => {
             this.listDataArrray = cardLogs;
             this.listDataArrray.forEach(val => {
                 val.createAtFormt = val.createdAt.toLocaleString();
@@ -68,6 +77,8 @@ export class CardLogComponent implements OnInit {
         }).catch(error => {
             console.log(error);
         });
+
+        this.cardLogService.getCardCount(this.cardLogSearch).then(count=>this.cardCount=count);
     }
 
     ngOnInit() {
@@ -75,25 +86,10 @@ export class CardLogComponent implements OnInit {
     }
 
     ongetPageList(index) {
-        let userList = this.cardLogService.getList(index, this.pageSize, this.cardLogSearch)
-            .then((carsLog) => {
-                this.listDataArrray = carsLog;
-                this.listDataArrray.forEach(val => {
-                    val.createAtFormt = val.createdAt.toLocaleString();
-                })
-            });
+        this.getList(index);
     }
 
     search() {
-        this.pageCount = this.cardLogService.getCount(this.cardLogSearch);
-
-        this.cardLogService.getList(1, this.pageSize, this.cardLogSearch).then((cardLogs) => {
-            this.listDataArrray = cardLogs;
-            this.listDataArrray.forEach(val => {
-                val.createAtFormt = val.createdAt.toLocaleString();
-            })
-        }).catch(error => {
-            console.log(error);
-        });
+        this.getList(1);
     }
 }

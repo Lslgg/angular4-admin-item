@@ -23,8 +23,8 @@ export class CardLogService {
             cardLog.set("card", cardLogInfo.card);
             cardLog.set("type", cardLogInfo.type);
             cardLog.set("desc", cardLogInfo.desc);
-            cardLog.set("userType", cardLogInfo.userType);            
-            
+            cardLog.set("userType", cardLogInfo.userType);
+
 
             cardLog.save(null, {
                 success: function (cardLog) {
@@ -40,6 +40,7 @@ export class CardLogService {
     }
 
     getCount(cardLogSearch: CardLogSearch): Promise<number> {
+
         var query = this.parseParser.setQuery("CardLog");
         if (cardLogSearch.username != "") {
             query.equalTo("userName", cardLogSearch.username);
@@ -60,12 +61,18 @@ export class CardLogService {
         if (cardLogSearch.cardType != "") {
             query.equalTo("type", cardLogSearch.cardType);
         }
+
+        if (cardLogSearch.userType != "") {
+            query.equalTo("userType", parseInt(cardLogSearch.userType));
+        }
+
         let promise = new Promise<number>((resolve, reject) => {
             query.count({
                 success: (count: number) => { return resolve(count); },
                 error: (error) => { return reject(error) }
             });
         });
+
         return promise;
     }
 
@@ -81,22 +88,27 @@ export class CardLogService {
         }
 
         if (cardLogSearch.startDate != null) {
-            query.greaterThanOrEqualTo('createdAt', new Date(cardLogSearch.startDate));
+            query.greaterThanOrEqualTo('createdAt', cardLogSearch.startDate);
         }
 
         if (cardLogSearch.endDate != null) {
-            query.lessThanOrEqualTo('createdAt', new Date(cardLogSearch.endDate));
+            query.lessThanOrEqualTo('createdAt', cardLogSearch.endDate);
         }
 
         if (cardLogSearch.cardType != "") {
             query.equalTo("type", cardLogSearch.cardType);
         }
 
-        query.descending('updatedAt');
-        query.skip((pageIndex - 1) * pageSize);
-        query.limit(pageSize);
+        if (cardLogSearch.userType != "") {
+            query.equalTo("userType", parseInt(cardLogSearch.userType));
+        }
 
         let promise = new Promise<any>((resolve, reject) => {
+
+            query.descending('updatedAt');
+            query.skip((pageIndex - 1) * pageSize);
+            query.limit(pageSize);
+
             query.find({
                 success: (result: Array<any>) => {
                     let list: Array<CardLog> = new Array<CardLog>();
@@ -108,6 +120,50 @@ export class CardLogService {
                     }
 
                     resolve(list);
+                },
+                error: (error) => { console.log(error); reject(error) }
+            });
+        });
+
+        return promise;
+    }
+
+    getCardCount(cardLogSearch: CardLogSearch): Promise<number> {
+        var query = this.parseParser.setQuery("CardLog");
+        if (cardLogSearch.username != "") {
+            query.equalTo("userName", cardLogSearch.username);
+        }
+
+        if (cardLogSearch.targetname != "") {
+            query.equalTo("targetName", cardLogSearch.targetname);
+        }
+
+        if (cardLogSearch.startDate != null) {
+            query.greaterThanOrEqualTo('createdAt', cardLogSearch.startDate);
+        }
+
+        if (cardLogSearch.endDate != null) {
+            query.lessThanOrEqualTo('createdAt', cardLogSearch.endDate);
+        }
+
+        if (cardLogSearch.cardType != "") {
+            query.equalTo("type", cardLogSearch.cardType);
+        }
+
+        if (cardLogSearch.userType != "") {
+            query.equalTo("userType", parseInt(cardLogSearch.userType));
+        }
+
+        let promise = new Promise<number>((resolve, reject) => {
+            query.select("card");
+            query.find({
+                success: (result) => {
+                    var cardCount=0;
+                    for (let i = 0; i < result.length; i++) {
+                      let card= result[i].get("card");
+                      cardCount+=card;
+                    }
+                    resolve(cardCount);
                 },
                 error: (error) => { console.log(error); reject(error) }
             });

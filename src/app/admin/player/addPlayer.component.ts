@@ -49,7 +49,7 @@ export class AddPlayerComponent implements OnInit {
                 this.router.navigate(['../admin/player']);
                 return ;
             }).catch(error => {
-                alert("修改房卡失败！");
+                alert("修改房卡失败！"); 
                 return ;
             })
         }

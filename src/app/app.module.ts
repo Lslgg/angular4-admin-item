@@ -1,7 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Routing Module
 import { AppRoutingModule } from './app.routing';
@@ -15,9 +16,10 @@ import { AuthGuard } from './admin/common/server/auth-guard.service';
 
 @NgModule({
   imports: [
-    BrowserModule,
     AppRoutingModule,
-    AdminModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    AdminModule,
   ],
   declarations: [
     AppComponent,

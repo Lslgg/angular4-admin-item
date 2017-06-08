@@ -1,39 +1,49 @@
 <template-panel-table>
     <div class="card" plane-title>
         <div class="card-header">
-            <strong>高级查找</strong>
+            查找 <strong>[合计:操作次数({{ recordCount }}) 房卡数量({{ cardCount }})]</strong>
         </div>
         <div class="card-block"> 
             <form class="form-horizontal " method="post">
                 <div class="form-group row">
-                    <div class="input-group col-md-3">
+                    <div class="input-group col-md-4">
                         <label class="form-control-label" for="hf-email">用户名称: </label>
                         <input class="form-control" [(ngModel)]="cardLogSearch.username" id="username" name="username" placeholder="用户名称" type="text" #username/>
                     </div>
-
-                    <div class="input-group col-md-3">
+                    <div class="input-group col-md-4">
                         <label class="form-control-label" for="hf-email">目标用户: </label>
                         <input class="form-control" [(ngModel)]="cardLogSearch.targetname" id="targetname" name="targetname" placeholder="目标用户" type="text" #targetname/>
                     </div>
-                    <div class="input-group col-md-3">
-                        <label class="form-control-label" for="hf-email">开始时间: </label>
-                        <input class="form-control" [(ngModel)]="cardLogSearch.startDate" 
-                            id="startDate" name="startDate" placeholder="开始时间" type="text" #startDate/>
-                    </div>
-
-                    <div class="input-group col-md-3">
-                        <label class="form-control-label" for="hf-email">结束时间: </label>
-                        <input class="form-control" [(ngModel)]="cardLogSearch.endDate" 
-                            id="endDate" name="endDate" placeholder="结束时间" type="text" #endDate/>
+                    <div class="input-group col-md-4">
+                        <label class="form-control-label" for="hf-email">操作类型: </label>
+                        <select name="cardType" [(ngModel)]="cardLogSearch.cardType" id="cardType" class="form-control" #cardType>
+                            <option value="" selected>--全部--</option>  
+                            <option value="添房卡">添加房卡</option>                  
+                            <option value="减房卡">减少房卡</option>   
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="input-group col-md-12">
-                        <label class="form-control-label" for="hf-email">操作类型: </label>
-                        <select name="cardType" [(ngModel)]="cardLogSearch.cardType" id="cardType" class="form-control" #cardType>
-                            <option value="">--全部--</option>  
-                            <option value="添房卡">添加房卡</option>                  
-                            <option value="减房卡">减少房卡</option>   
+                     <div class="input-group col-md-4">
+                        <label class="form-control-label" for="hf-email">开始时间: </label>
+                        <material-datepicker [(date)]="cardLogSearch.startDate"></material-datepicker>
+                        <!--<input class="form-control" [(ngModel)]="cardLogSearch.startDate" 
+                            id="startDate" name="startDate" placeholder="开始时间" type="text" #startDate/>-->
+                    </div>
+                    <div class="input-group col-md-4">
+                        <label class="form-control-label" for="hf-email">结束时间: </label>
+                        <material-datepicker [(date)]="cardLogSearch.endDate"></material-datepicker>
+                        
+                        <!--<input class="form-control" [(ngModel)]="cardLogSearch.endDate" 
+                            id="endDate" name="endDate" placeholder="结束时间" type="text" #endDate/>-->
+                    </div>
+                    <div class="input-group col-md-4">
+                        <label class="form-control-label" for="hf-email">用户类型: </label>
+                        <select name="userType" [(ngModel)]="cardLogSearch.userType" id="userType" class="form-control" #userType>
+                            <option value="" selected>--全部--</option>  
+                            <option value="0">管理员</option>                  
+                            <option value="1">代理</option>
+                            <option value="2">玩家</option>                                  
                         </select>
                     </div>
                 </div>
@@ -48,7 +58,7 @@
             </button>
         </div>
     </div>
-    <common-table [tableInfo]="tableInfo" [listData]="listDataArrray" [pageCount]="pageCount" (ongetPageList)="ongetPageList($event)"
-            (onDelInfo)="ondelUser($event)" (onUpInfo)="onUpInfoUser($event)" (onAllchecked)="onAllchecked($event)" plane-body>
+    <common-table [tableInfo]="tableInfo" [listData]="listDataArrray" 
+        [pageCount]="pageCount" (ongetPageList)="ongetPageList($event)" plane-body>
     </common-table>
 </template-panel-table>

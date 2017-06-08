@@ -9,4 +9,6 @@ export class CardLogSearch {
     public endDate: Date;
 
     public cardType: string="";
+
+    public userType:string="";
 }

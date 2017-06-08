@@ -94,7 +94,7 @@ export class PlayerService {
 			carLog.card = card;
 			carLog.userId = currentId;
 			carLog.userName = currentUserName;
-			//carLog.userType="管理员";
+			carLog.userType=2;
 			carLog.targetId = id.toString();
 			carLog.targetName = username;
 			carLog.type = card >= 0 ? "添房卡" : "减房卡";
@@ -108,7 +108,7 @@ export class PlayerService {
 			selfcarLog.card = currentUserCard;
 			selfcarLog.userId = currentId;
 			selfcarLog.userName = currentUserName;
-			//carLog.userType="代理";			
+			selfcarLog.userType=currentUserName=="admin"?0:1;		
 			selfcarLog.targetId = currentId;
 			selfcarLog.targetName = currentUserName;
 			selfcarLog.type = currentUserCard >= 0 ? "添房卡" : "减房卡";
