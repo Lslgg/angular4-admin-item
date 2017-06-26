@@ -4,8 +4,8 @@ export class Parse implements ParserServer {
 
     constructor() {
         let parse = require("parse");
-        parse.initialize("webSite");
-        parse.serverURL = 'http://211.149.220.134:1337/parse';
+        parse.initialize("xxxxxxxx");
+        parse.serverURL = 'xxxxxxxxxxxx';
         this.Parse = parse;
     }
 
